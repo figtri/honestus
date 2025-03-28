@@ -25,6 +25,16 @@ const config = {
     'bg-success/30',
     'border-warning',
     'bg-warning/30',
+    // Fig theme colors
+    'bg-fig-dark',
+    'bg-fig-medium',
+    'bg-fig-light',
+    'text-fig-dark',
+    'text-fig-medium',
+    'text-fig-light',
+    'border-fig-dark',
+    'border-fig-medium',
+    'border-fig-light',
   ],
   theme: {
     container: {
@@ -92,6 +102,15 @@ const config = {
         success: 'hsl(var(--success))',
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
+        // Custom fig theme colors
+        fig: {
+          dark: '#152A20', // Deep fig leaf green
+          medium: '#2D4F3F', // Medium fig green
+          light: '#4D7868', // Lighter fig green
+          accent: '#E27145', // Ripe fig color / orange-brown
+          cream: '#F9F3E9', // Fig flesh color
+          brown: '#6B4536', // Fig branch/stem color
+        },
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
@@ -146,6 +165,12 @@ const config = {
           ],
         },
       }),
+      backgroundImage: {
+        'fig-pattern':
+          "url(\"data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23154731' fill-opacity='0.08' fill-rule='evenodd'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/svg%3E\")",
+        'fig-leaves':
+          "url(\"data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 3C27.4 3 9 21.4 9 44c0 22.6 18.4 41 41 41s41-18.4 41-41C91 21.4 72.6 3 50 3z' fill='%23154731' fill-opacity='0.05' /%3E%3C/svg%3E\")",
+      },
     },
   },
 }

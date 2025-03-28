@@ -25,6 +25,8 @@ export const LandingSections: CollectionConfig = {
         { label: 'Featured Interviews', value: 'featured' },
         { label: 'About Section', value: 'about' },
         { label: 'Call to Action', value: 'cta' },
+        { label: 'Articles Grid', value: 'articles' },
+        { label: 'Spotify Interviews', value: 'spotify' },
       ],
     },
     {
@@ -58,6 +60,60 @@ export const LandingSections: CollectionConfig = {
       admin: {
         description: 'Order of appearance on the landing page',
       },
+    },
+    {
+      name: 'articles',
+      type: 'array',
+      admin: {
+        condition: (data) => data.type === 'articles',
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+        },
+        {
+          name: 'imageUrl',
+          type: 'text',
+          admin: {
+            description: 'URL to the article image',
+          },
+        },
+        {
+          name: 'slug',
+          type: 'text',
+          required: true,
+          admin: {
+            description: 'URL slug for the article',
+          },
+        },
+        {
+          name: 'category',
+          type: 'text',
+        },
+      ],
+    },
+    {
+      name: 'spotifyUrls',
+      type: 'array',
+      admin: {
+        condition: (data) => data.type === 'spotify',
+      },
+      fields: [
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+          admin: {
+            description: 'Spotify URL (will be converted to embed format)',
+          },
+        },
+      ],
     },
   ],
 }

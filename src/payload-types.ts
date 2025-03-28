@@ -736,7 +736,7 @@ export interface Form {
 export interface LandingSection {
   id: number;
   title: string;
-  type: 'hero' | 'featured' | 'about' | 'cta';
+  type: 'hero' | 'featured' | 'about' | 'cta' | 'articles' | 'spotify';
   content: {
     root: {
       type: string;
@@ -758,6 +758,31 @@ export interface LandingSection {
    * Order of appearance on the landing page
    */
   order: number;
+  articles?:
+    | {
+        title: string;
+        description?: string | null;
+        /**
+         * URL to the article image
+         */
+        imageUrl?: string | null;
+        /**
+         * URL slug for the article
+         */
+        slug: string;
+        category?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  spotifyUrls?:
+    | {
+        /**
+         * Spotify URL (will be converted to embed format)
+         */
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1325,6 +1350,22 @@ export interface LandingSectionsSelect<T extends boolean = true> {
   image?: T;
   backgroundColor?: T;
   order?: T;
+  articles?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        imageUrl?: T;
+        slug?: T;
+        category?: T;
+        id?: T;
+      };
+  spotifyUrls?:
+    | T
+    | {
+        url?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
