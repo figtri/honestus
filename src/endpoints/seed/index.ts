@@ -9,6 +9,7 @@ import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
+import { landingSections } from './landing-sections'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -18,6 +19,7 @@ const collections: CollectionSlug[] = [
   'forms',
   'form-submissions',
   'search',
+  'landing-sections',
 ]
 const globals: GlobalSlug[] = ['header', 'footer']
 
@@ -279,6 +281,17 @@ export const seed = async ({
       data: contactPageData({ contactForm: contactForm }),
     }),
   ])
+
+  payload.logger.info(`— Seeding landing sections...`)
+
+  await Promise.all(
+    landingSections.map((section) =>
+      payload.create({
+        collection: 'landing-sections',
+        data: section,
+      }),
+    ),
+  )
 
   payload.logger.info(`— Seeding globals...`)
 

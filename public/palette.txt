@@ -1,0 +1,37 @@
+/* Coolors Exported Palette - https://coolors.co/452645-766d7c-91794f-102015-e27145-cc1d1b-385d2d */
+
+- Tailwind
+
+{ 'dark_purple': { DEFAULT: '#452645', 100: '#0e080e', 200: '#1c0f1c', 300: '#291729', 400: '#371e37', 500: '#452645', 600: '#794379', 700: '#a963a9', 800: '#c697c6', 900: '#e2cbe2' }, 'dim_gray': { DEFAULT: '#766D7C', 100: '#181619', 200: '#2f2c32', 300: '#47424b', 400: '#5f5863', 500: '#766d7c', 600: '#928a97', 700: '#ada7b1', 800: '#c9c5cb', 900: '#e4e2e5' }, 'chamoisee': { DEFAULT: '#91794F', 100: '#1d1810', 200: '#3a3020', 300: '#574930', 400: '#746140', 500: '#91794f', 600: '#ae966c', 700: '#c2b090', 800: '#d6cab5', 900: '#ebe5da' }, 'dark_green': { DEFAULT: '#102015', 100: '#030604', 200: '#060c08', 300: '#09120c', 400: '#0c1810', 500: '#102015', 600: '#2e5c3d', 700: '#4e9a66', 800: '#84c197', 900: '#c1e0cb' }, 'burnt_sienna': { DEFAULT: '#E27145', 100: '#331408', 200: '#662810', 300: '#9a3d18', 400: '#cd5120', 500: '#e27145', 600: '#e88e6b', 700: '#eeaa90', 800: '#f3c7b5', 900: '#f9e3da' }, 'fire_engine_red': { DEFAULT: '#CC1D1B', 100: '#290605', 200: '#510c0b', 300: '#7a1210', 400: '#a21715', 500: '#cc1d1b', 600: '#e53b38', 700: '#ec6c6a', 800: '#f29d9c', 900: '#f9cecd' }, 'hunter_green': { DEFAULT: '#385D2D', 100: '#0b1309', 200: '#162512', 300: '#22381b', 400: '#2d4a24', 500: '#385d2d', 600: '#568f45', 700: '#7ab668', 800: '#a7cf9a', 900: '#d3e7cd' } }
+
+- CSV
+
+452645,766D7C,91794F,102015,E27145,CC1D1B,385D2D
+
+- With #
+
+#452645, #766D7C, #91794F, #102015, #E27145, #CC1D1B, #385D2D
+
+- Array
+
+["452645","766D7C","91794F","102015","E27145","CC1D1B","385D2D"]
+
+- Object
+
+{"Dark purple":"452645","Dim gray":"766D7C","Chamoisee":"91794F","Dark green":"102015","Burnt sienna":"E27145","Fire engine red":"CC1D1B","Hunter green":"385D2D"}
+
+- Extended Array
+
+[{"name":"Dark purple","hex":"452645","rgb":[69,38,69],"cmyk":[0,45,0,73],"hsb":[300,45,27],"hsl":[300,29,21],"lab":[20,20,-13]},{"name":"Dim gray","hex":"766D7C","rgb":[118,109,124],"cmyk":[5,12,0,51],"hsb":[276,12,49],"hsl":[276,6,46],"lab":[47,7,-7]},{"name":"Chamoisee","hex":"91794F","rgb":[145,121,79],"cmyk":[0,17,46,43],"hsb":[38,46,57],"hsl":[38,29,44],"lab":[52,3,26]},{"name":"Dark green","hex":"102015","rgb":[16,32,21],"cmyk":[50,0,34,87],"hsb":[139,50,13],"hsl":[139,33,9],"lab":[11,-10,5]},{"name":"Burnt sienna","hex":"E27145","rgb":[226,113,69],"cmyk":[0,50,69,11],"hsb":[17,69,89],"hsl":[17,73,58],"lab":[60,41,44]},{"name":"Fire engine red","hex":"CC1D1B","rgb":[204,29,27],"cmyk":[0,86,87,20],"hsb":[1,87,80],"hsl":[1,77,45],"lab":[44,64,48]},{"name":"Hunter green","hex":"385D2D","rgb":[56,93,45],"cmyk":[40,0,52,64],"hsb":[106,52,36],"hsl":[106,35,27],"lab":[36,-24,23]}]
+
+- XML
+
+<palette>
+  <color name="Dark purple" hex="452645" r="69" g="38" b="69" />
+  <color name="Dim gray" hex="766D7C" r="118" g="109" b="124" />
+  <color name="Chamoisee" hex="91794F" r="145" g="121" b="79" />
+  <color name="Dark green" hex="102015" r="16" g="32" b="21" />
+  <color name="Burnt sienna" hex="E27145" r="226" g="113" b="69" />
+  <color name="Fire engine red" hex="CC1D1B" r="204" g="29" b="27" />
+  <color name="Hunter green" hex="385D2D" r="56" g="93" b="45" />
+</palette>
