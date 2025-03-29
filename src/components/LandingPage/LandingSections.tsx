@@ -18,6 +18,28 @@ interface Section {
   backgroundColor?: string
   order: number
   spotifyUrls?: (string | { url: string })[]
+  featuredPosts?: {
+    id: string
+    title: string
+    slug: string
+    heroImage?: {
+      url: string
+      alt: string
+      width?: number | null
+      height?: number | null
+    }
+    meta?: {
+      description?: string
+      image?: {
+        url: string
+        alt: string
+      }
+    }
+    categories?: {
+      id: string
+      title: string
+    }[]
+  }[]
   articles?: {
     title: string
     description?: string

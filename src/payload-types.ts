@@ -758,6 +758,10 @@ export interface LandingSection {
    * Order of appearance on the landing page
    */
   order: number;
+  /**
+   * Select posts to feature in this section
+   */
+  featuredPosts?: (number | Post)[] | null;
   articles?:
     | {
         title: string;
@@ -1350,6 +1354,7 @@ export interface LandingSectionsSelect<T extends boolean = true> {
   image?: T;
   backgroundColor?: T;
   order?: T;
+  featuredPosts?: T;
   articles?:
     | T
     | {

@@ -37,6 +37,28 @@ export interface Section {
   backgroundColor?: string
   order: number
   spotifyUrls?: (string | { url: string })[]
+  featuredPosts?: {
+    id: string
+    title: string
+    slug: string
+    heroImage?: {
+      url: string
+      alt: string
+      width?: number | null
+      height?: number | null
+    }
+    meta?: {
+      description?: string
+      image?: {
+        url: string
+        alt: string
+      }
+    }
+    categories?: {
+      id: string
+      title: string
+    }[]
+  }[]
   articles?: {
     title: string
     description?: string
@@ -164,7 +186,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
               </motion.h2>
 
               <motion.div
-                className="prose prose-lg text-white max-w-none prose-headings:text-emerald-200 prose-a:text-emerald-300 prose-strong:text-emerald-100"
+                className="prose prose-lg text-white max-w-none prose-headings:text-emerald-200 prose-a:text-emerald-300 prose-strong:text-emerald-100 mb-16"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -172,6 +194,45 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
               >
                 <RichText data={section.content} enableGutter={false} />
               </motion.div>
+
+              {section.featuredPosts && section.featuredPosts.length > 0 && (
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  {section.featuredPosts.map((post, index) => {
+                    // Determine the best image URL to use
+                    // First try the heroImage URL
+                    const heroImageUrl = post.heroImage?.url
+                    // Next try meta.image URL
+                    const metaImageUrl = post.meta?.image?.url
+                    // Use a placeholder if neither is available
+                    const placeholderUrl =
+                      'https://placehold.co/600x400/2D4F3F/FFFFFF/png?text=No+Image'
+
+                    // Use the first available image
+                    const imageUrl = heroImageUrl || metaImageUrl || placeholderUrl
+
+                    return (
+                      <ArticleCard
+                        key={post.id}
+                        title={post.title}
+                        description={post.meta?.description}
+                        imageUrl={imageUrl}
+                        imageAlt={
+                          post.heroImage?.alt || post.meta?.image?.alt || `Image for ${post.title}`
+                        }
+                        category={post.categories?.[0]?.title}
+                        slug={post.slug || ''}
+                        priority={index < 3}
+                      />
+                    )
+                  })}
+                </motion.div>
+              )}
 
               {/* Decorative roots at the bottom */}
               <div className="h-12 relative overflow-hidden mt-16">

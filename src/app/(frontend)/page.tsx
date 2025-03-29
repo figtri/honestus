@@ -23,6 +23,28 @@ interface Section {
   backgroundColor?: string
   order: number
   spotifyUrls?: (string | { url: string })[]
+  featuredPosts?: {
+    id: string
+    title: string
+    slug: string
+    heroImage?: {
+      url: string
+      alt: string
+      width?: number | null
+      height?: number | null
+    }
+    meta?: {
+      description?: string
+      image?: {
+        url: string
+        alt: string
+      }
+    }
+    categories?: {
+      id: string
+      title: string
+    }[]
+  }[]
   articles?: {
     title: string
     description?: string
@@ -300,7 +322,11 @@ export default async function Home() {
       limit: 100,
       sort: 'order',
       draft: isEnabled,
+      depth: 3, // Increase depth to get deeply nested relationship data including heroImage
     })
+
+    // Simple debug output
+    console.log('Number of sections found:', result.docs.length)
 
     if (!result.docs || result.docs.length === 0) {
       // Fallback to sample data if no landing sections are found
@@ -316,24 +342,114 @@ export default async function Home() {
     }
 
     // Transform CMS data to match the Section interface
-    const sections = result.docs.map((doc) => ({
-      id: String(doc.id), // Convert id to string
-      title: doc.title,
-      type: doc.type as Section['type'],
-      content: doc.content,
-      image: doc.image
-        ? {
-            url: typeof doc.image === 'object' ? doc.image.url : '',
-            alt: typeof doc.image === 'object' ? doc.image.alt : 'Section image',
-            width: typeof doc.image === 'object' ? doc.image.width : null,
-            height: typeof doc.image === 'object' ? doc.image.height : null,
-          }
-        : undefined,
-      backgroundColor: doc.backgroundColor || '#2D4F3F',
-      order: doc.order,
-      spotifyUrls: doc.spotifyUrls || [],
-      articles: doc.articles || [],
-    })) as Section[]
+    const sections = result.docs.map((doc) => {
+      // Process featured posts if they exist
+      const featuredPosts = doc.featuredPosts
+        ? Array.isArray(doc.featuredPosts)
+          ? (doc.featuredPosts
+              .map((post) => {
+                // Handle both number IDs and Post objects
+                if (typeof post === 'number') {
+                  return null // Skip if just an ID reference without populated data
+                }
+
+                // Debug post structure
+                console.log(
+                  'Post from CMS:',
+                  JSON.stringify(
+                    {
+                      id: post.id,
+                      title: post.title,
+                      heroImage: post.heroImage,
+                      meta: post.meta,
+                    },
+                    null,
+                    2,
+                  ),
+                )
+
+                // Process populated post data
+                // First try to use heroImage, fallback to meta.image if heroImage is not available
+                const heroImageObj =
+                  post.heroImage && typeof post.heroImage === 'object'
+                    ? post.heroImage
+                    : typeof post.heroImage === 'number'
+                      ? null
+                      : null
+
+                console.log('heroImage information:', {
+                  postId: post.id,
+                  hasHeroImage: Boolean(post.heroImage),
+                  heroImageType: typeof post.heroImage,
+                  heroImageObj,
+                })
+
+                return {
+                  id: String(post.id),
+                  title: post.title,
+                  slug: post.slug || '',
+                  // Include the complete heroImage object if it exists
+                  heroImage: heroImageObj
+                    ? {
+                        url: heroImageObj.url,
+                        alt: heroImageObj.alt || `Image for ${post.title}`,
+                        width: heroImageObj.width,
+                        height: heroImageObj.height,
+                      }
+                    : undefined,
+                  meta: post.meta
+                    ? {
+                        description: post.meta.description || undefined,
+                        image:
+                          post.meta?.image && typeof post.meta.image === 'object'
+                            ? {
+                                url: post.meta.image.url,
+                                alt: post.meta.image.alt || 'Post image',
+                              }
+                            : undefined,
+                      }
+                    : undefined,
+                  categories: Array.isArray(post.categories)
+                    ? (post.categories
+                        .map((cat) => {
+                          if (typeof cat === 'number') return null
+                          return {
+                            id: String(cat.id),
+                            title: cat.title,
+                          }
+                        })
+                        .filter(Boolean) as { id: string; title: string }[])
+                    : undefined,
+                }
+              })
+              .filter(Boolean) as Section['featuredPosts'])
+          : []
+        : []
+
+      // Handle image properties
+      let imageData
+      if (doc.image && typeof doc.image === 'object') {
+        imageData = {
+          url: doc.image.url || '', // Ensure string (not null/undefined)
+          alt: doc.image.alt || 'Section image', // Ensure string (not null/undefined)
+          width: doc.image.width,
+          height: doc.image.height,
+        }
+      }
+
+      return {
+        id: String(doc.id), // Convert id to string
+        title: doc.title,
+        type: doc.type as Section['type'],
+        content: doc.content,
+        image: imageData,
+        backgroundColor: doc.backgroundColor || '#2D4F3F',
+        order: doc.order,
+        spotifyUrls: doc.spotifyUrls || [],
+        articles: doc.articles || [],
+        featuredPosts,
+      } as Section
+    })
 
     return (
       <main>

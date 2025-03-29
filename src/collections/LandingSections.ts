@@ -62,6 +62,16 @@ export const LandingSections: CollectionConfig = {
       },
     },
     {
+      name: 'featuredPosts',
+      type: 'relationship',
+      relationTo: 'posts',
+      hasMany: true,
+      admin: {
+        description: 'Select posts to feature in this section',
+        condition: (data) => data.type === 'featured',
+      },
+    },
+    {
       name: 'articles',
       type: 'array',
       admin: {
