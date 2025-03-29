@@ -171,72 +171,48 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
 
       case 'featured':
         return (
-          <div className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
-            {/* Enhanced background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/30 backdrop-blur-[2px]"></div>
-            <div className="absolute -top-24 -right-24 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl"></div>
-            {decorativeElements}
+          <div
+            className="py-20 relative overflow-hidden"
+            style={{ backgroundColor: bgColor === '#91794F' ? '#e8e3cd' : bgColor }}
+          >
+            {/* Subtle background pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute inset-0 bg-[radial-gradient(#000000_1px,transparent_1px)] bg-[length:20px_20px]"></div>
+            </div>
 
             <div className="container mx-auto px-4 relative z-10">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
+              <div className="flex justify-between items-center mb-10">
+                <div>
+                  <h2 className="text-3xl font-bold text-emerald-500">{section.title}</h2>
+                  <div className="w-20 h-1 bg-emerald-500 mt-2 rounded-full"></div>
+                </div>
+                <Link
+                  href="/posts"
+                  className="text-emerald-500 hover:text-emerald-500 flex items-center gap-2 font-medium transition-colors duration-300 group"
                 >
-                  <h2 className="text-4xl font-bold text-white">{section.title}</h2>
-                  <div className="h-1 w-20 bg-emerald-500/70 rounded-full mt-2"></div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <Link
-                    href="/posts"
-                    className="text-emerald-300 hover:text-white flex items-center text-lg font-medium transition-colors duration-300"
+                  <span>See More</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="group-hover:translate-x-1 transition-transform duration-300"
                   >
-                    See More
-                    <svg
-                      className="ml-2 w-5 h-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                      />
-                    </svg>
-                  </Link>
-                </motion.div>
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </Link>
               </div>
 
-              <motion.div
-                className="prose prose-lg text-white max-w-2xl prose-headings:text-emerald-200 prose-a:text-emerald-300 prose-strong:text-emerald-100 mb-12"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                <RichText data={section.content} enableGutter={false} />
-              </motion.div>
-
-              {section.featuredPosts && section.featuredPosts.length > 0 && (
-                <motion.div
-                  className="grid gap-6"
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  {section.featuredPosts.map((post, index) => {
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {section.featuredPosts &&
+                  section.featuredPosts.length > 0 &&
+                  section.featuredPosts.map((post, index) => {
                     // Determine the best image URL to use
                     const heroImageUrl = post.heroImage?.url
                     const metaImageUrl = post.meta?.image?.url
@@ -248,84 +224,88 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                     const readingTime = Math.floor(Math.random() * 20) + 5
 
                     return (
-                      <div
+                      <Link
                         key={post.id}
-                        className="bg-gradient-to-r from-emerald-800/30 to-emerald-800/10 rounded-xl overflow-hidden hover:from-emerald-700/30 hover:to-emerald-700/20 transition-all duration-300 border border-emerald-700/20 shadow-lg hover:shadow-xl group"
+                        href={`/posts/${post.slug}`}
+                        className="group rounded-lg overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-all duration-300"
                       >
-                        <Link
-                          href={`/posts/${post.slug}`}
-                          className="flex flex-col md:flex-row h-full"
-                        >
-                          <div className="md:w-1/3 lg:w-1/4 relative h-64 md:h-auto overflow-hidden">
-                            <Image
-                              src={imageUrl}
-                              alt={
-                                post.heroImage?.alt ||
-                                post.meta?.image?.alt ||
-                                `Image for ${post.title}`
-                              }
-                              fill
-                              className="object-cover transition-transform duration-700 group-hover:scale-105"
-                              sizes="(max-width: 768px) 100vw, 33vw"
-                              priority={index < 2}
-                            />
-                            {post.categories && post.categories[0] && (
-                              <span className="absolute top-4 left-4 bg-emerald-600/90 text-white px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
+                        <div className="relative h-[250px] w-full overflow-hidden">
+                          <Image
+                            src={imageUrl}
+                            alt={post.title}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            priority={index < 3}
+                          />
+                          {/* Category badge */}
+                          {post.categories && post.categories[0] && (
+                            <div className="absolute top-4 left-4 z-10">
+                              <span className="px-3 py-1 bg-orange-500/90 text-white text-xs uppercase tracking-wider rounded-full shadow-sm backdrop-blur-sm">
                                 {post.categories[0].title}
                               </span>
-                            )}
-                          </div>
-                          <div className="p-6 md:p-8 md:w-2/3 lg:w-3/4 flex flex-col justify-between">
-                            <div>
-                              <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-emerald-300 transition-colors duration-300">
-                                {post.title}
-                              </h3>
-                              <p className="text-emerald-100/80 mb-4 line-clamp-2 md:line-clamp-3">
-                                {post.meta?.description ||
-                                  'Read this exciting interview to learn more about the fascinating insights shared by our guest.'}
-                              </p>
                             </div>
-                            <div className="flex items-center text-emerald-300/70 text-sm mt-4">
-                              <span className="flex items-center mr-4">
-                                <svg
-                                  className="w-5 h-5 mr-1"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                  />
-                                </svg>
-                                {readingTime} Minutes
-                              </span>
-                              <span className="flex items-center text-emerald-200">
-                                Read More
-                                <svg
-                                  className="ml-1 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                                  />
-                                </svg>
-                              </span>
+                          )}
+
+                          {/* Gradient overlay at the bottom */}
+                          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        </div>
+
+                        <div className="p-5 pl-5 flex flex-col flex-grow bg-white">
+                          {/* Reading time and progress */}
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center text-gray-500 text-sm">
+                              <svg
+                                className="w-4 h-4 mr-1"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                              </svg>
+                              <span>{readingTime} min read</span>
+                            </div>
+                            {/* Visual reading progress bar */}
+                            <div className="w-16 h-1 bg-gray-200 rounded-full">
+                              <div
+                                className="h-full bg-orange-500 rounded-full"
+                                style={{ width: `${Math.min(100, readingTime * 5)}%` }}
+                              ></div>
                             </div>
                           </div>
-                        </Link>
-                      </div>
+
+                          <h3 className="font-bold text-xl mb-2 text-gray-800 group-hover:text-orange-600 transition-colors duration-300 line-clamp-2">
+                            {post.title}
+                          </h3>
+
+                          <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
+                            {post.meta?.description ||
+                              'Read this exciting interview to learn more about the fascinating insights shared by our guest.'}
+                          </p>
+
+                          <div className="flex items-center mt-2 text-orange-600 font-medium text-sm group-hover:text-orange-800 transition-colors duration-300">
+                            <span>Read full interview</span>
+                            <svg
+                              className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M5 12h14" />
+                              <path d="m12 5 7 7-7 7" />
+                            </svg>
+                          </div>
+                        </div>
+                      </Link>
                     )
                   })}
-                </motion.div>
-              )}
+              </div>
             </div>
           </div>
         )
