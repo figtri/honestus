@@ -25,6 +25,7 @@ export const LandingSections: CollectionConfig = {
         { label: 'Featured Interviews', value: 'featured' },
         { label: 'About Section', value: 'about' },
         { label: 'Call to Action', value: 'cta' },
+        { label: 'Testimonials Section', value: 'testimonials' },
         { label: 'Articles Grid', value: 'articles' },
         { label: 'Spotify Interviews', value: 'spotify' },
       ],
@@ -51,6 +52,9 @@ export const LandingSections: CollectionConfig = {
         { label: 'Burnt Orange', value: '#E27145' },
         { label: 'Crimson', value: '#CC1D1B' },
         { label: 'Forest Green', value: '#385D2D' },
+        { label: 'Light Beige', value: '#e8e3ce' },
+        { label: 'Fig Green', value: '#152A20' },
+        { label: 'Medium Fig Green', value: '#2D4F3F' },
       ],
     },
     {
@@ -60,6 +64,59 @@ export const LandingSections: CollectionConfig = {
       admin: {
         description: 'Order of appearance on the landing page',
       },
+    },
+    {
+      name: 'testimonials',
+      type: 'array',
+      admin: {
+        condition: (data) => data.type === 'testimonials',
+      },
+      labels: {
+        singular: 'Testimonial',
+        plural: 'Testimonials',
+      },
+      fields: [
+        {
+          name: 'quote',
+          type: 'textarea',
+          required: true,
+          admin: {
+            description: 'The testimonial text',
+          },
+        },
+        {
+          name: 'name',
+          type: 'text',
+          required: true,
+          admin: {
+            description: 'The name of the person giving the testimonial',
+          },
+        },
+        {
+          name: 'title',
+          type: 'text',
+          admin: {
+            description: 'The title or position of the person',
+          },
+        },
+        {
+          name: 'initials',
+          type: 'text',
+          required: true,
+          maxLength: 3,
+          admin: {
+            description: 'Initials to display if no image is available (2-3 characters)',
+          },
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description: 'Profile image for the testimonial (optional)',
+          },
+        },
+      ],
     },
     {
       name: 'featuredPosts',

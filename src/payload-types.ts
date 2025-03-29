@@ -736,7 +736,7 @@ export interface Form {
 export interface LandingSection {
   id: number;
   title: string;
-  type: 'hero' | 'featured' | 'about' | 'cta' | 'articles' | 'spotify';
+  type: 'hero' | 'featured' | 'about' | 'cta' | 'testimonials' | 'articles' | 'spotify';
   content: {
     root: {
       type: string;
@@ -753,11 +753,49 @@ export interface LandingSection {
     [k: string]: unknown;
   };
   image?: (number | null) | Media;
-  backgroundColor?: ('#452645' | '#766D7C' | '#91794F' | '#102015' | '#E27145' | '#CC1D1B' | '#385D2D') | null;
+  backgroundColor?:
+    | (
+        | '#452645'
+        | '#766D7C'
+        | '#91794F'
+        | '#102015'
+        | '#E27145'
+        | '#CC1D1B'
+        | '#385D2D'
+        | '#e8e3ce'
+        | '#152A20'
+        | '#2D4F3F'
+      )
+    | null;
   /**
    * Order of appearance on the landing page
    */
   order: number;
+  testimonials?:
+    | {
+        /**
+         * The testimonial text
+         */
+        quote: string;
+        /**
+         * The name of the person giving the testimonial
+         */
+        name: string;
+        /**
+         * The title or position of the person
+         */
+        title?: string | null;
+        /**
+         * Initials to display if no image is available (2-3 characters)
+         */
+        initials: string;
+        /**
+         * Profile image for the testimonial (optional)
+         */
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * Select posts to feature in this section
    */
@@ -1354,6 +1392,16 @@ export interface LandingSectionsSelect<T extends boolean = true> {
   image?: T;
   backgroundColor?: T;
   order?: T;
+  testimonials?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        title?: T;
+        initials?: T;
+        image?: T;
+        id?: T;
+      };
   featuredPosts?: T;
   articles?:
     | T

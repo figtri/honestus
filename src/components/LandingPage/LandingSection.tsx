@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import RichText from '@/components/RichText'
@@ -7,6 +7,7 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 import Link from 'next/link'
 import { ArticleCard } from '@/components/ArticleCard'
 import { SpotifyEmbed } from '@/components/SpotifyEmbed'
+import { TestimonialsSection, Testimonial } from './TestimonialsSection'
 
 // Fig Tree SVG elements for the decorative design elements
 const FigLeafDecoration = ({ className }: { className?: string }) => (
@@ -26,7 +27,7 @@ const RootDecoration = ({ className }: { className?: string }) => (
 export interface Section {
   id: string
   title: string
-  type: 'hero' | 'featured' | 'about' | 'cta' | 'articles' | 'spotify'
+  type: 'hero' | 'featured' | 'testimonials' | 'about' | 'cta' | 'articles' | 'spotify'
   content: SerializedEditorState
   image?: {
     url: string
@@ -66,6 +67,7 @@ export interface Section {
     slug: string
     category?: string
   }[]
+  testimonials?: Testimonial[]
 }
 
 export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
@@ -171,42 +173,60 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
 
       case 'featured':
         return (
-          <div
-            className="py-20 relative overflow-hidden"
-            style={{ backgroundColor: bgColor === '#91794F' ? '#e8e3cd' : bgColor }}
-          >
-            {/* Subtle background pattern */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute inset-0 bg-[radial-gradient(#000000_1px,transparent_1px)] bg-[length:20px_20px]"></div>
+          <div className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
+            {/* Root decorative elements instead of figs */}
+            <div className="absolute -bottom-16 -right-16 w-72 h-72 text-emerald-900/10">
+              <RootDecoration className="w-full h-full rotate-45" />
+            </div>
+            <div className="absolute -top-16 -left-16 w-72 h-72 text-emerald-900/10">
+              <RootDecoration className="w-full h-full -rotate-45" />
+            </div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 text-emerald-900/5 opacity-50">
+              <RootDecoration className="w-full h-full" />
             </div>
 
+            {/* Background decoration */}
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/30"></div>
+            <div className="absolute top-0 right-0 w-full h-40 bg-gradient-to-b from-emerald-900/20 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-emerald-900/20 to-transparent"></div>
+
             <div className="container mx-auto px-4 relative z-10">
-              <div className="flex justify-between items-center mb-10">
-                <div>
-                  <h2 className="text-3xl font-bold text-emerald-500">{section.title}</h2>
-                  <div className="w-20 h-1 bg-emerald-500 mt-2 rounded-full"></div>
-                </div>
-                <Link
-                  href="/posts"
-                  className="text-emerald-500 hover:text-emerald-500 flex items-center gap-2 font-medium transition-colors duration-300 group"
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <span>See More</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="group-hover:translate-x-1 transition-transform duration-300"
+                  <h2 className="text-4xl font-bold text-white">{section.title}</h2>
+                  <div className="h-1 w-20 bg-emerald-500/70 rounded-full mt-2"></div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <Link
+                    href="/posts"
+                    className="text-emerald-300 hover:text-white flex items-center text-lg font-medium transition-colors duration-300"
                   >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </Link>
+                    See More
+                    <svg
+                      className="ml-2 w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </Link>
+                </motion.div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -310,6 +330,26 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
           </div>
         )
 
+      case 'testimonials':
+        return (
+          <TestimonialsSection
+            testimonials={
+              section.testimonials || [
+                {
+                  id: '1',
+                  quote:
+                    'This is a placeholder testimonial. Please add real testimonials in the CMS.',
+                  name: 'John Doe',
+                  title: 'Customer',
+                  initials: 'JD',
+                },
+              ]
+            }
+            bgColor={section.backgroundColor || '#e8e3ce'}
+            title={section.title || 'Testimonials'}
+          />
+        )
+
       case 'about':
         return (
           <div className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
@@ -359,49 +399,81 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
 
       case 'cta':
         return (
-          <div className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
-            {decorativeElements}
+          <div
+            className="py-16 relative overflow-hidden"
+            style={{ backgroundColor: bgColor || '#f5f5f0' }}
+          >
+            {/* More natural-looking branch decorations */}
+            <RootDecoration className="absolute -top-20 right-20 w-64 h-64 text-emerald-800/[0.04] rotate-30 transform scale-100" />
+            <RootDecoration className="absolute -bottom-16 left-40 w-64 h-64 text-emerald-800/[0.03] -rotate-15 transform scale-100" />
 
-            <div className="container mx-auto px-4 text-center relative z-10">
-              <motion.div
-                className="max-w-3xl mx-auto"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                <h2 className="text-4xl font-bold mb-6 text-white">{section.title}</h2>
-                <div className="prose prose-lg text-white mx-auto prose-headings:text-emerald-200 prose-a:text-emerald-300 prose-strong:text-emerald-100">
-                  <RichText data={section.content} enableGutter={false} />
-                </div>
-
+            <div className="container mx-auto px-8 relative z-10 flex flex-col md:flex-row md:items-center gap-16">
+              <div className="flex md:w-1/2 md:max-w-xl items-center">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
+                  transition={{ duration: 0.5 }}
                 >
+                  <h2 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight">
+                    Your Words, <br />
+                    Our Witness
+                  </h2>
+                  <div className="mt-8 text-xl text-white">
+                    <p>
+                      Behind every face is a narrative worth preserving. <br />
+                      Your experiences, challenges, and triumphs <br />
+                      deserve to be heard and remembered.
+                    </p>
+                  </div>
+
                   <Link
                     href="/contact"
-                    className="mt-8 inline-flex items-center px-8 py-4 bg-emerald-600 text-white rounded-full text-lg font-semibold hover:bg-emerald-700 transition-colors duration-300 shadow-lg"
+                    className="mt-8 inline-flex items-center px-5 py-3 bg-gray-900 text-white text-sm font-medium rounded-sm hover:bg-gray-800 transition-colors duration-300"
                   >
-                    Get Started
-                    <svg
-                      className="ml-2 w-5 h-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                      />
-                    </svg>
+                    SHARE YOUR STORY
                   </Link>
                 </motion.div>
-              </motion.div>
+              </div>
+
+              {section.image ? (
+                <motion.div
+                  className="md:w-1/2 h-[600px] max-w-[600px] relative"
+                  initial={{ opacity: 0, x: 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  {/* Single branch beside image */}
+                  <RootDecoration className="absolute -left-10 top-1/4 w-20 h-64 text-emerald-800/[0.05] -rotate-15" />
+
+                  <div className="relative h-full">
+                    <Image
+                      unoptimized={true}
+                      src={section.image.url}
+                      alt={section.image.alt}
+                      width={600}
+                      height={600}
+                      className="w-full h-full object-cover rounded-2xl"
+                    />
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  className="md:w-1/2 relative bg-gray-200 h-[600px] max-w-[600px] rounded-sm"
+                  initial={{ opacity: 0, x: 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  {/* Single branch beside placeholder */}
+                  <RootDecoration className="absolute -left-10 top-1/4 w-20 h-64 text-emerald-800/[0.05] -rotate-15" />
+
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                    Image placeholder
+                  </div>
+                </motion.div>
+              )}
             </div>
           </div>
         )
@@ -542,7 +614,10 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.2,
+                  }}
                 >
                   {section.spotifyUrls.map((item, index) => {
                     // Handle both string URLs (from sample data) and object URLs (from CMS)

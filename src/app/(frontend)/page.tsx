@@ -12,7 +12,7 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 interface Section {
   id: string
   title: string
-  type: 'hero' | 'featured' | 'about' | 'cta' | 'articles' | 'spotify'
+  type: 'hero' | 'featured' | 'about' | 'cta' | 'articles' | 'spotify' | 'testimonials'
   content: SerializedEditorState
   image?: {
     url: string
@@ -51,6 +51,19 @@ interface Section {
     imageUrl?: string
     slug: string
     category?: string
+  }[]
+  testimonials?: {
+    id: string
+    quote: string
+    name: string
+    title: string
+    initials: string
+    image?: {
+      url: string
+      alt: string
+      width?: number | null
+      height?: number | null
+    }
   }[]
 }
 
@@ -448,6 +461,7 @@ export default async function Home() {
         spotifyUrls: doc.spotifyUrls || [],
         articles: doc.articles || [],
         featuredPosts,
+        testimonials: doc.testimonials || [],
       } as Section
     })
 
