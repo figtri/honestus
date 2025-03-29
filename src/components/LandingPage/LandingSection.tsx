@@ -172,21 +172,54 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
       case 'featured':
         return (
           <div className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
+            {/* Enhanced background decoration */}
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/30 backdrop-blur-[2px]"></div>
+            <div className="absolute -top-24 -right-24 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl"></div>
             {decorativeElements}
 
             <div className="container mx-auto px-4 relative z-10">
-              <motion.h2
-                className="text-4xl font-bold mb-12 text-center text-white"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                {section.title}
-              </motion.h2>
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <h2 className="text-4xl font-bold text-white">{section.title}</h2>
+                  <div className="h-1 w-20 bg-emerald-500/70 rounded-full mt-2"></div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <Link
+                    href="/posts"
+                    className="text-emerald-300 hover:text-white flex items-center text-lg font-medium transition-colors duration-300"
+                  >
+                    See More
+                    <svg
+                      className="ml-2 w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
+                  </Link>
+                </motion.div>
+              </div>
 
               <motion.div
-                className="prose prose-lg text-white max-w-none prose-headings:text-emerald-200 prose-a:text-emerald-300 prose-strong:text-emerald-100 mb-16"
+                className="prose prose-lg text-white max-w-2xl prose-headings:text-emerald-200 prose-a:text-emerald-300 prose-strong:text-emerald-100 mb-12"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -197,7 +230,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
 
               {section.featuredPosts && section.featuredPosts.length > 0 && (
                 <motion.div
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+                  className="grid gap-6"
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -205,39 +238,94 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                 >
                   {section.featuredPosts.map((post, index) => {
                     // Determine the best image URL to use
-                    // First try the heroImage URL
                     const heroImageUrl = post.heroImage?.url
-                    // Next try meta.image URL
                     const metaImageUrl = post.meta?.image?.url
-                    // Use a placeholder if neither is available
                     const placeholderUrl =
                       'https://placehold.co/600x400/2D4F3F/FFFFFF/png?text=No+Image'
-
-                    // Use the first available image
                     const imageUrl = heroImageUrl || metaImageUrl || placeholderUrl
 
+                    // Generate random reading time for demo purposes (would normally be calculated)
+                    const readingTime = Math.floor(Math.random() * 20) + 5
+
                     return (
-                      <ArticleCard
+                      <div
                         key={post.id}
-                        title={post.title}
-                        description={post.meta?.description}
-                        imageUrl={imageUrl}
-                        imageAlt={
-                          post.heroImage?.alt || post.meta?.image?.alt || `Image for ${post.title}`
-                        }
-                        category={post.categories?.[0]?.title}
-                        slug={post.slug || ''}
-                        priority={index < 3}
-                      />
+                        className="bg-gradient-to-r from-emerald-800/30 to-emerald-800/10 rounded-xl overflow-hidden hover:from-emerald-700/30 hover:to-emerald-700/20 transition-all duration-300 border border-emerald-700/20 shadow-lg hover:shadow-xl group"
+                      >
+                        <Link
+                          href={`/posts/${post.slug}`}
+                          className="flex flex-col md:flex-row h-full"
+                        >
+                          <div className="md:w-1/3 lg:w-1/4 relative h-64 md:h-auto overflow-hidden">
+                            <Image
+                              src={imageUrl}
+                              alt={
+                                post.heroImage?.alt ||
+                                post.meta?.image?.alt ||
+                                `Image for ${post.title}`
+                              }
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-105"
+                              sizes="(max-width: 768px) 100vw, 33vw"
+                              priority={index < 2}
+                            />
+                            {post.categories && post.categories[0] && (
+                              <span className="absolute top-4 left-4 bg-emerald-600/90 text-white px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
+                                {post.categories[0].title}
+                              </span>
+                            )}
+                          </div>
+                          <div className="p-6 md:p-8 md:w-2/3 lg:w-3/4 flex flex-col justify-between">
+                            <div>
+                              <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-emerald-300 transition-colors duration-300">
+                                {post.title}
+                              </h3>
+                              <p className="text-emerald-100/80 mb-4 line-clamp-2 md:line-clamp-3">
+                                {post.meta?.description ||
+                                  'Read this exciting interview to learn more about the fascinating insights shared by our guest.'}
+                              </p>
+                            </div>
+                            <div className="flex items-center text-emerald-300/70 text-sm mt-4">
+                              <span className="flex items-center mr-4">
+                                <svg
+                                  className="w-5 h-5 mr-1"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  />
+                                </svg>
+                                {readingTime} Minutes
+                              </span>
+                              <span className="flex items-center text-emerald-200">
+                                Read More
+                                <svg
+                                  className="ml-1 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </Link>
+                      </div>
                     )
                   })}
                 </motion.div>
               )}
-
-              {/* Decorative roots at the bottom */}
-              <div className="h-12 relative overflow-hidden mt-16">
-                <RootDecoration className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-16 text-emerald-700/20" />
-              </div>
             </div>
           </div>
         )
@@ -410,60 +498,108 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
       case 'spotify':
         return (
           <div className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
-            {decorativeElements}
+            {/* Root decorative elements instead of figs */}
+            <div className="absolute -bottom-16 -right-16 w-72 h-72 text-emerald-900/10">
+              <RootDecoration className="w-full h-full rotate-45" />
+            </div>
+            <div className="absolute -top-16 -left-16 w-72 h-72 text-emerald-900/10">
+              <RootDecoration className="w-full h-full -rotate-45" />
+            </div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 text-emerald-900/5 opacity-50">
+              <RootDecoration className="w-full h-full" />
+            </div>
+
+            {/* Background decoration */}
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/30"></div>
+            <div className="absolute top-0 right-0 w-full h-40 bg-gradient-to-b from-emerald-900/20 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-emerald-900/20 to-transparent"></div>
 
             <div className="container mx-auto px-4 relative z-10">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <h2 className="text-4xl font-bold text-white">{section.title}</h2>
+                  <div className="h-1 w-20 bg-emerald-500/70 rounded-full mt-2"></div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <Link
+                    href="https://open.spotify.com/user/YOUR_SPOTIFY_ID"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-emerald-300 hover:text-white flex items-center text-lg font-medium transition-colors duration-300"
+                  >
+                    Follow on Spotify
+                    <svg className="ml-2 w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+                    </svg>
+                  </Link>
+                </motion.div>
+              </div>
+
               <motion.div
-                className="text-center mb-12"
-                initial={{ opacity: 0, y: 30 }}
+                className="prose prose-lg text-white max-w-2xl mb-12"
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <h2 className="text-4xl font-bold mb-6 text-white">{section.title}</h2>
-                <div className="prose prose-lg text-white mx-auto max-w-2xl">
-                  <RichText data={section.content} enableGutter={false} />
-                </div>
+                <RichText data={section.content} enableGutter={false} />
               </motion.div>
 
               {section.spotifyUrls && section.spotifyUrls.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   {section.spotifyUrls.map((item, index) => {
                     // Handle both string URLs (from sample data) and object URLs (from CMS)
                     const url = typeof item === 'string' ? item : item.url
                     return (
-                      <React.Fragment key={index}>
-                        {url && (
-                          <SpotifyEmbed
-                            spotifyUrl={url}
-                            className="bg-emerald-800/50 border border-emerald-700/30 p-4"
-                          />
-                        )}
-                      </React.Fragment>
+                      <motion.div
+                        key={index}
+                        className="bg-gradient-to-r from-emerald-800/50 to-emerald-800/30 border border-emerald-700/30 rounded-xl overflow-hidden shadow-lg"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{
+                          duration: 0.5,
+                          delay: 0.1 + (index % 3) * 0.1, // Stagger animation based on column position
+                        }}
+                      >
+                        <div className="p-4">
+                          <SpotifyEmbed spotifyUrl={url} />
+                        </div>
+                        <div className="px-4 pb-4 pt-1 flex justify-end">
+                          <Link
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-emerald-300 hover:text-white flex items-center transition-colors duration-300"
+                          >
+                            Listen on Spotify
+                            <svg className="ml-1 w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+                            </svg>
+                          </Link>
+                        </div>
+                      </motion.div>
                     )
                   })}
-                </div>
+                </motion.div>
               )}
-
-              <motion.div
-                className="mt-12 text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <Link
-                  href="https://open.spotify.com/user/YOUR_SPOTIFY_ID"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 bg-[#1DB954] text-white rounded-full text-lg font-medium hover:bg-[#1ED760] transition-colors duration-300"
-                >
-                  Follow on Spotify
-                  <svg className="ml-2 w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
-                  </svg>
-                </Link>
-              </motion.div>
             </div>
           </div>
         )
