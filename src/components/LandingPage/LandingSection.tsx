@@ -340,7 +340,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <Link
-                    href="https://open.spotify.com/user/YOUR_SPOTIFY_ID"
+                    href="https://open.spotify.com/show/412it6NLH7YpwH9Z3V78qv?si=94b5ced4d4b04ff9"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-emerald-300 hover:text-white flex items-center text-lg font-medium transition-colors duration-300"
