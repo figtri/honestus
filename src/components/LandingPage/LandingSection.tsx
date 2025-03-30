@@ -42,6 +42,7 @@ export interface Section {
       id: string
       title: string
     }[]
+    readingTime?: number
   }[]
   articles?: {
     title: string
@@ -226,9 +227,6 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                       'https://placehold.co/600x400/2D4F3F/FFFFFF/png?text=No+Image'
                     const imageUrl = heroImageUrl || metaImageUrl || placeholderUrl
 
-                    // Generate random reading time for demo purposes (would normally be calculated)
-                    const readingTime = Math.floor(Math.random() * 20) + 5
-
                     return (
                       <Link
                         key={post.id}
@@ -272,13 +270,13 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                                 <circle cx="12" cy="12" r="10" />
                                 <polyline points="12 6 12 12 16 14" />
                               </svg>
-                              <span>{readingTime} min read</span>
+                              <span>{post.readingTime || 5} min read</span>
                             </div>
                             {/* Visual reading progress bar */}
                             <div className="w-16 h-1 bg-gray-200 rounded-full">
                               <div
                                 className="h-full bg-orange-500 rounded-full"
-                                style={{ width: `${Math.min(100, readingTime * 5)}%` }}
+                                style={{ width: `${Math.min(100, (post.readingTime || 5) * 5)}%` }}
                               ></div>
                             </div>
                           </div>

@@ -42,6 +42,7 @@ interface Section {
       id: string
       title: string
     }[]
+    readingTime?: number
   }[]
   articles?: {
     title: string
@@ -328,7 +329,7 @@ export default async function Home() {
       limit: 100,
       sort: 'order',
       draft: isEnabled,
-      depth: 3, // Increase depth to get deeply nested relationship data including heroImage
+      depth: 5, // Increase depth to get all fields from related posts
     })
 
     // Simple debug output
@@ -394,6 +395,7 @@ export default async function Home() {
                   id: String(post.id),
                   title: post.title,
                   slug: post.slug || '',
+                  readingTime: post.readingTime || 5,
                   // Include the complete heroImage object if it exists
                   heroImage: heroImageObj
                     ? {

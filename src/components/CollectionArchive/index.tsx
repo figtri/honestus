@@ -44,7 +44,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
             <Link
               key={post.id}
               href={`/posts/${post.slug}`}
-              className="group rounded-lg overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-all duration-300"
+              className="group rounded-lg overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-all duration-300 relative bg-white"
             >
               <div className="relative h-[250px] w-full overflow-hidden">
                 <Image
@@ -56,7 +56,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
                 />
                 {/* Category badge */}
                 {category && (
-                  <div className="absolute top-4 left-4 z-10">
+                  <div className="absolute top-4 left-4 z-20">
                     <span className="px-3 py-1 bg-orange-500/90 text-white text-xs uppercase tracking-wider rounded-full shadow-sm backdrop-blur-sm">
                       {category.title}
                     </span>
@@ -67,7 +67,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
               </div>
 
-              <div className="p-5 pl-5 flex flex-col flex-grow bg-white">
+              <div className="relative z-20 p-5 pl-5 flex flex-col flex-grow bg-white">
                 {/* Reading time and progress */}
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center text-gray-500 text-sm">
@@ -94,16 +94,16 @@ export const CollectionArchive: React.FC<Props> = (props) => {
                   </div>
                 </div>
 
-                <h3 className="font-bold text-xl mb-2 text-gray-800 group-hover:text-orange-600 transition-colors duration-300 line-clamp-2">
+                <h3 className="relative z-20 font-bold text-xl mb-2 text-gray-800 group-hover:text-orange-600 transition-colors duration-300 line-clamp-2">
                   {post.title}
                 </h3>
 
-                <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
+                <p className="relative z-20 text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
                   {post.meta?.description ||
                     'Read this exciting interview to learn more about the fascinating insights shared by our guest.'}
                 </p>
 
-                <div className="flex items-center mt-2 text-orange-600 font-medium text-sm group-hover:text-orange-800 transition-colors duration-300">
+                <div className="relative z-20 flex items-center mt-2 text-orange-600 font-medium text-sm group-hover:text-orange-800 transition-colors duration-300">
                   <span>Read full interview</span>
                   <svg
                     className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"

@@ -49,16 +49,16 @@ export function TestimonialsSection({
   }
 
   return (
-    <section className="pb-5 relative overflow-hidden bg-[#E27145]">
-      <div className="max-w-4xl mx-auto text-center relative px-6">
+    <section className="relative overflow-hidden bg-[#E27145]">
+      <div className="max-w-4xl mx-auto text-center relative px-6 py-16">
         <StaggeredAnimation delay={100} direction="up" distance={20}>
-          <h2 className="text-4xl font-bold mb-10">{title}</h2>
+          <h2 className="text-4xl font-bold mb-10 text-white">{title}</h2>
         </StaggeredAnimation>
 
         <StaggeredAnimation delay={300} direction="up" distance={25} threshold={0.2}>
           <div className="relative">
             <div
-              className="text-8xl absolute -left-12 top-0 font-serif font-bold opacity-20"
+              className="text-8xl absolute -left-12 top-0 font-serif font-bold opacity-20 text-white"
               style={{ fontFamily: 'Georgia, serif' }}
             >
               &ldquo;
@@ -99,11 +99,11 @@ export function TestimonialsSection({
                 >
                   <div className="h-full flex flex-col justify-between">
                     <div className="mb-8">
-                      <p className="text-xl">{testimonial.quote}</p>
+                      <p className="text-xl text-white">{testimonial.quote}</p>
                     </div>
 
                     <div className="flex flex-col items-center justify-center mt-auto">
-                      <Avatar className="h-24 w-24 mb-4 border-2 border-amber-500 flex items-center justify-center">
+                      <Avatar className="h-24 w-24 mb-4 border-2 border-amber-400 flex items-center justify-center">
                         {testimonial.image ? (
                           <AvatarImage
                             src={testimonial.image.url}
@@ -116,8 +116,8 @@ export function TestimonialsSection({
                         </AvatarFallback>
                       </Avatar>
                       <div className="text-center">
-                        <p className="font-bold text-lg">{testimonial.name}</p>
-                        <p className="text-white">{testimonial.title}</p>
+                        <p className="font-bold text-lg text-white">{testimonial.name}</p>
+                        <p className="text-white/80">{testimonial.title}</p>
                       </div>
                     </div>
                   </div>
@@ -128,15 +128,15 @@ export function TestimonialsSection({
         </StaggeredAnimation>
 
         <StaggeredAnimation delay={500} direction="up" distance={15}>
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="flex justify-center gap-2">
             {testimonials.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`transition-all duration-300 rounded-full ${
                   index === current
-                    ? 'w-6 h-2 bg-amber-500'
-                    : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
+                    ? 'w-6 h-2 bg-amber-400'
+                    : 'w-2 h-2 bg-white/30 hover:bg-white/50'
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />
