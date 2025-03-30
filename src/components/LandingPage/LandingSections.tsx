@@ -7,7 +7,7 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 interface Section {
   id: string
   title: string
-  type: 'hero' | 'featured' | 'about' | 'cta' | 'articles' | 'spotify'
+  type: 'hero' | 'featured' | 'about' | 'cta' | 'articles' | 'spotify' | 'testimonials'
   content: SerializedEditorState
   image?: {
     url: string
@@ -15,7 +15,6 @@ interface Section {
     width?: number | null
     height?: number | null
   }
-  backgroundColor?: string
   order: number
   spotifyUrls?: (string | { url: string })[]
   featuredPosts?: {
@@ -54,9 +53,35 @@ interface LandingSectionsProps {
 }
 
 export function LandingSections({ sections }: LandingSectionsProps) {
+  // Sort sections in a specific order
+  const sortedSections = [...sections].sort((a, b) => {
+    // First handle hero section (always first)
+    if (a.type === 'hero') return -1
+    if (b.type === 'hero') return 1
+
+    // Then featured section (second)
+    if (a.type === 'featured') return -1
+    if (b.type === 'featured') return 1
+
+    // Then spotify section (third)
+    if (a.type === 'spotify') return -1
+    if (b.type === 'spotify') return 1
+
+    // Then cta section (fourth)
+    if (a.type === 'cta') return -1
+    if (b.type === 'cta') return 1
+
+    // Then testimonials section (fifth)
+    if (a.type === 'testimonials') return -1
+    if (b.type === 'testimonials') return 1
+
+    // For any other sections, use the order value
+    return a.order - b.order
+  })
+
   return (
     <>
-      {sections.map((section) => (
+      {sortedSections.map((section) => (
         <LandingSection key={section.id} section={section} />
       ))}
     </>

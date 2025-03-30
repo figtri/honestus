@@ -39,22 +39,6 @@ const LandingPage: CollectionConfig = {
       relationTo: 'media',
     },
     {
-      name: 'backgroundColor',
-      type: 'select',
-      options: [
-        { label: 'Deep Purple', value: '#452645' },
-        { label: 'Muted Gray', value: '#766D7C' },
-        { label: 'Warm Gold', value: '#91794F' },
-        { label: 'Dark Forest', value: '#102015' },
-        { label: 'Burnt Orange', value: '#E27145' },
-        { label: 'Crimson', value: '#CC1D1B' },
-        { label: 'Forest Green', value: '#385D2D' },
-        { label: 'Light Beige', value: '#e8e3ce' },
-        { label: 'Fig Green', value: '#152A20' },
-        { label: 'Medium Fig Green', value: '#2D4F3F' },
-      ],
-    },
-    {
       name: 'order',
       type: 'number',
       required: true,

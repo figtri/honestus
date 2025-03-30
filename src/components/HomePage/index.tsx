@@ -15,7 +15,6 @@ interface Section {
     width?: number | null
     height?: number | null
   }
-  backgroundColor?: string
   order: number
 }
 

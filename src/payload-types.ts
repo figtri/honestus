@@ -753,20 +753,6 @@ export interface LandingSection {
     [k: string]: unknown;
   };
   image?: (number | null) | Media;
-  backgroundColor?:
-    | (
-        | '#452645'
-        | '#766D7C'
-        | '#91794F'
-        | '#102015'
-        | '#E27145'
-        | '#CC1D1B'
-        | '#385D2D'
-        | '#e8e3ce'
-        | '#152A20'
-        | '#2D4F3F'
-      )
-    | null;
   /**
    * Order of appearance on the landing page
    */
@@ -1390,7 +1376,6 @@ export interface LandingSectionsSelect<T extends boolean = true> {
   type?: T;
   content?: T;
   image?: T;
-  backgroundColor?: T;
   order?: T;
   testimonials?:
     | T

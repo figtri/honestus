@@ -3,8 +3,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { StaggeredAnimation } from './staggered-animation'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
 
 // Define testimonial data type
 export interface Testimonial {
@@ -23,13 +21,11 @@ export interface Testimonial {
 
 export interface TestimonialsSectionProps {
   testimonials: Testimonial[]
-  bgColor?: string
   title?: string
 }
 
 export function TestimonialsSection({
   testimonials,
-  bgColor = '#e8e3ce',
   title = 'Client Success Stories',
 }: TestimonialsSectionProps) {
   const [current, setCurrent] = useState(0)
@@ -53,7 +49,7 @@ export function TestimonialsSection({
   }
 
   return (
-    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
+    <section className="py-20 relative overflow-hidden bg-[#E27145]">
       <div className="max-w-4xl mx-auto text-center relative px-6">
         <StaggeredAnimation delay={100} direction="up" distance={20}>
           <h2 className="text-4xl font-bold mb-10">{title}</h2>

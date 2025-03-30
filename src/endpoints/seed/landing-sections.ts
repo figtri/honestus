@@ -29,7 +29,6 @@ export const landingSections: RequiredDataFromCollectionSlug<'landing-sections'>
         version: 1,
       },
     },
-    backgroundColor: '#452645',
     order: 1,
   },
   {
@@ -60,7 +59,6 @@ export const landingSections: RequiredDataFromCollectionSlug<'landing-sections'>
         version: 1,
       },
     },
-    backgroundColor: '#766D7C',
     order: 2,
   },
   {
@@ -91,7 +89,6 @@ export const landingSections: RequiredDataFromCollectionSlug<'landing-sections'>
         version: 1,
       },
     },
-    backgroundColor: '#91794F',
     order: 3,
   },
   {
@@ -122,7 +119,6 @@ export const landingSections: RequiredDataFromCollectionSlug<'landing-sections'>
         version: 1,
       },
     },
-    backgroundColor: '#E27145',
     order: 4,
   },
 ]

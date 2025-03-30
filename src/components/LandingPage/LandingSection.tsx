@@ -5,7 +5,6 @@ import Image from 'next/image'
 import RichText from '@/components/RichText'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import Link from 'next/link'
-import { ArticleCard } from '@/components/ArticleCard'
 import { SpotifyEmbed } from '@/components/SpotifyEmbed'
 import { TestimonialsSection, Testimonial } from './TestimonialsSection'
 
@@ -13,14 +12,6 @@ import { TestimonialsSection, Testimonial } from './TestimonialsSection'
 const FigLeafDecoration = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className} fill="currentColor" aria-hidden="true">
     <path d="M50,3C27.4,3,9,21.4,9,44c0,22.6,18.4,41,41,41s41-18.4,41-41C91,21.4,72.6,3,50,3z M75.4,43.5c-1.4,4.2-4.2,7.6-8,9.9 c-3.8,2.3-8.1,3-12.4,2.2c-1.2-0.2-2.1-1.1-2.3-2.3c-0.2-1.2,0.5-2.4,1.6-2.8c5.5-2.2,9.4-7.3,10.1-13.1c0.1-1.2,1.1-2.1,2.3-2.2 c1.2-0.1,2.3,0.6,2.6,1.8C70.2,40.5,73,42.4,75.4,43.5z" />
-  </svg>
-)
-
-const RootDecoration = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className} fill="currentColor" aria-hidden="true">
-    <path d="M50,95c-1.1,0-2-0.9-2-2V15c0-1.1,0.9-2,2-2s2,0.9,2,2v78C52,94.1,51.1,95,50,95z" />
-    <path d="M60,85c-0.3,0-0.5-0.1-0.8-0.2c-1-0.4-1.4-1.6-1-2.6C69.3,58.5,62.4,37.8,60,30c-0.3-1.1,0.3-2.2,1.4-2.5c1.1-0.3,2.2,0.3,2.5,1.4c0.1,0.3,7.7,22.1-4.1,54.4C61.5,84.5,60.8,85,60,85z" />
-    <path d="M40,85c-0.8,0-1.5-0.5-1.8-1.2c-11.8-32.3-4.2-54.1-4.1-54.4c0.3-1.1,1.4-1.7,2.5-1.4c1.1,0.3,1.7,1.4,1.4,2.5c-2.4,7.8-9.3,28.5,1.8,52.1c0.4,1,0,2.2-1,2.6C40.5,84.9,40.3,85,40,85z" />
   </svg>
 )
 
@@ -35,7 +26,6 @@ export interface Section {
     width?: number | null
     height?: number | null
   }
-  backgroundColor?: string
   order: number
   spotifyUrls?: (string | { url: string })[]
   featuredPosts?: {
@@ -71,16 +61,28 @@ export interface Section {
 }
 
 export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
-  const bgColor = section.backgroundColor || '#2D4F3F' // Default to a fig tree green
+  // Get the appropriate background color based on section type
+  const getBackgroundColor = () => {
+    switch (section.type) {
+      case 'hero':
+        return '#2D4F3F' // Medium Fig Green
+      case 'about':
+        return '#1F3B2F' // Darker Fig Green
+      case 'cta':
+        return '#E27145' // Burnt Orange
+      case 'testimonials':
+        return '#e8e3ce' // Light Beige
+      case 'featured':
+      case 'spotify':
+        return '#152A20' // Dark Fig Green - shared between featured and spotify
+      case 'articles':
+        return '#2A4539' // Another shade of Fig Green
+      default:
+        return '#2D4F3F' // Default to Fig Green
+    }
+  }
 
-  // Common decorative elements for fig tree aesthetic
-  const decorativeElements = (
-    <>
-      <FigLeafDecoration className="text-emerald-900/10 absolute -bottom-12 -right-12 w-64 h-64 rotate-45" />
-      <FigLeafDecoration className="text-emerald-900/10 absolute -top-12 -left-12 w-64 h-64 -rotate-45" />
-      <RootDecoration className="text-emerald-900/10 absolute -bottom-8 left-1/2 w-40 h-40 -translate-x-1/2" />
-    </>
-  )
+  const bgColor = getBackgroundColor()
 
   const renderSection = () => {
     switch (section.type) {
@@ -174,19 +176,8 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
       case 'featured':
         return (
           <div className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
-            {/* Root decorative elements instead of figs */}
-            <div className="absolute -bottom-16 -right-16 w-72 h-72 text-emerald-900/10">
-              <RootDecoration className="w-full h-full rotate-45" />
-            </div>
-            <div className="absolute -top-16 -left-16 w-72 h-72 text-emerald-900/10">
-              <RootDecoration className="w-full h-full -rotate-45" />
-            </div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 text-emerald-900/5 opacity-50">
-              <RootDecoration className="w-full h-full" />
-            </div>
-
             {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/30"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#1e3d2b] to-[#152A20]"></div>
             <div className="absolute top-0 right-0 w-full h-40 bg-gradient-to-b from-emerald-900/20 to-transparent"></div>
             <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-emerald-900/20 to-transparent"></div>
 
@@ -330,239 +321,11 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
           </div>
         )
 
-      case 'testimonials':
-        return (
-          <TestimonialsSection
-            testimonials={
-              section.testimonials || [
-                {
-                  id: '1',
-                  quote:
-                    'This is a placeholder testimonial. Please add real testimonials in the CMS.',
-                  name: 'John Doe',
-                  title: 'Customer',
-                  initials: 'JD',
-                },
-              ]
-            }
-            bgColor={section.backgroundColor || '#e8e3ce'}
-            title={section.title || 'Testimonials'}
-          />
-        )
-
-      case 'about':
-        return (
-          <div className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
-            {decorativeElements}
-
-            <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12 relative z-10">
-              {section.image && (
-                <motion.div
-                  className="md:w-1/2 relative"
-                  initial={{ opacity: 0, x: -60, rotate: -3 }}
-                  whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <div className="relative overflow-hidden rounded-full border-4 border-emerald-600/30 shadow-xl">
-                    <Image
-                      src={section.image.url}
-                      alt={section.image.alt}
-                      width={section.image.width || 500}
-                      height={section.image.height || 500}
-                      className="rounded-full"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/20 to-transparent mix-blend-multiply"></div>
-                  </div>
-
-                  {/* Decorative fig leaves */}
-                  <FigLeafDecoration className="absolute -top-8 -right-8 w-32 h-32 rotate-45 text-emerald-700/30" />
-                  <FigLeafDecoration className="absolute -bottom-8 -left-8 w-32 h-32 -rotate-45 text-emerald-700/30" />
-                </motion.div>
-              )}
-
-              <motion.div
-                className="md:w-1/2"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                <h2 className="text-4xl font-bold mb-6 text-white">{section.title}</h2>
-                <div className="prose prose-lg text-white prose-headings:text-emerald-200 prose-a:text-emerald-300 prose-strong:text-emerald-100">
-                  <RichText data={section.content} enableGutter={false} />
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        )
-
-      case 'cta':
-        return (
-          <div
-            className="py-16 relative overflow-hidden"
-            style={{ backgroundColor: bgColor || '#f5f5f0' }}
-          >
-            {/* More natural-looking branch decorations */}
-            <RootDecoration className="absolute -top-20 right-20 w-64 h-64 text-emerald-800/[0.04] rotate-30 transform scale-100" />
-            <RootDecoration className="absolute -bottom-16 left-40 w-64 h-64 text-emerald-800/[0.03] -rotate-15 transform scale-100" />
-
-            <div className="container mx-auto px-8 relative z-10 flex flex-col md:flex-row md:items-center gap-16">
-              <div className="flex md:w-1/2 md:max-w-xl items-center">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <h2 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight">
-                    Your Words, <br />
-                    Our Witness
-                  </h2>
-                  <div className="mt-8 text-xl text-white">
-                    <p>
-                      Behind every face is a narrative worth preserving. <br />
-                      Your experiences, challenges, and triumphs <br />
-                      deserve to be heard and remembered.
-                    </p>
-                  </div>
-
-                  <Link
-                    href="/contact"
-                    className="mt-8 inline-flex items-center px-5 py-3 bg-gray-900 text-white text-sm font-medium rounded-sm hover:bg-gray-800 transition-colors duration-300"
-                  >
-                    SHARE YOUR STORY
-                  </Link>
-                </motion.div>
-              </div>
-
-              {section.image ? (
-                <motion.div
-                  className="md:w-1/2 h-[600px] max-w-[600px] relative"
-                  initial={{ opacity: 0, x: 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                >
-                  {/* Single branch beside image */}
-                  <RootDecoration className="absolute -left-10 top-1/4 w-20 h-64 text-emerald-800/[0.05] -rotate-15" />
-
-                  <div className="relative h-full">
-                    <Image
-                      unoptimized={true}
-                      src={section.image.url}
-                      alt={section.image.alt}
-                      width={600}
-                      height={600}
-                      className="w-full h-full object-cover rounded-2xl"
-                    />
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div
-                  className="md:w-1/2 relative bg-gray-200 h-[600px] max-w-[600px] rounded-sm"
-                  initial={{ opacity: 0, x: 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                >
-                  {/* Single branch beside placeholder */}
-                  <RootDecoration className="absolute -left-10 top-1/4 w-20 h-64 text-emerald-800/[0.05] -rotate-15" />
-
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                    Image placeholder
-                  </div>
-                </motion.div>
-              )}
-            </div>
-          </div>
-        )
-
-      case 'articles':
-        return (
-          <div className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
-            {decorativeElements}
-
-            <div className="container mx-auto px-4 relative z-10">
-              <motion.div
-                className="text-center mb-12"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                <h2 className="text-4xl font-bold mb-6 text-white">{section.title}</h2>
-                <div className="prose prose-lg text-white mx-auto max-w-2xl">
-                  <RichText data={section.content} enableGutter={false} />
-                </div>
-              </motion.div>
-
-              {section.articles && section.articles.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {section.articles.map((article, index) => (
-                    <React.Fragment key={index}>
-                      {article && (
-                        <ArticleCard
-                          title={article.title}
-                          description={article.description}
-                          imageUrl={article.imageUrl}
-                          category={article.category}
-                          slug={article.slug}
-                          priority={index < 3}
-                        />
-                      )}
-                    </React.Fragment>
-                  ))}
-                </div>
-              )}
-
-              <motion.div
-                className="mt-12 text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <Link
-                  href="/posts"
-                  className="inline-flex items-center px-6 py-3 bg-white/10 text-white rounded-full text-lg font-medium hover:bg-white/20 transition-colors duration-300 border border-white/20"
-                >
-                  View All Articles
-                  <svg
-                    className="ml-2 w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </Link>
-              </motion.div>
-            </div>
-          </div>
-        )
-
       case 'spotify':
         return (
           <div className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
-            {/* Root decorative elements instead of figs */}
-            <div className="absolute -bottom-16 -right-16 w-72 h-72 text-emerald-900/10">
-              <RootDecoration className="w-full h-full rotate-45" />
-            </div>
-            <div className="absolute -top-16 -left-16 w-72 h-72 text-emerald-900/10">
-              <RootDecoration className="w-full h-full -rotate-45" />
-            </div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 text-emerald-900/5 opacity-50">
-              <RootDecoration className="w-full h-full" />
-            </div>
-
             {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/30"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#101c16] to-[#152A20]"></div>
             <div className="absolute top-0 right-0 w-full h-40 bg-gradient-to-b from-emerald-900/20 to-transparent"></div>
             <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-emerald-900/20 to-transparent"></div>
 
@@ -653,6 +416,96 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                       </motion.div>
                     )
                   })}
+                </motion.div>
+              )}
+            </div>
+          </div>
+        )
+
+      case 'testimonials':
+        return (
+          <TestimonialsSection
+            testimonials={
+              section.testimonials || [
+                {
+                  id: '1',
+                  quote:
+                    'This is a placeholder testimonial. Please add real testimonials in the CMS.',
+                  name: 'John Doe',
+                  title: 'Customer',
+                  initials: 'JD',
+                },
+              ]
+            }
+            title={section.title || 'Testimonials'}
+          />
+        )
+
+      case 'cta':
+        return (
+          <div
+            className="py-16 relative overflow-hidden"
+            style={{ backgroundColor: bgColor || '#f5f5f0' }}
+          >
+            <div className="container h-[700px] mx-auto px-8 relative z-10 flex flex-col md:flex-row md:items-center gap-16">
+              <div className="flex md:w-1/2 md:max-w-xl items-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <h2 className="text-5xl sm:text-6xl font-bold text-black leading-tight">
+                    Your Words, <br />
+                    Our Witness
+                  </h2>
+                  <div className="mt-8 text-xl text-white">
+                    <p>
+                      Behind every face is a narrative worth preserving. <br />
+                      Your experiences, challenges, and triumphs <br />
+                      deserve to be heard and remembered.
+                    </p>
+                  </div>
+
+                  <Link
+                    href="/contact"
+                    className="mt-8 inline-flex items-center px-5 py-3 bg-black text-white text-sm font-medium rounded-sm hover:bg-black/80 transition-colors duration-300"
+                  >
+                    SHARE YOUR STORY
+                  </Link>
+                </motion.div>
+              </div>
+
+              {section.image ? (
+                <motion.div
+                  className="md:w-1/2 h-[600px] max-w-[600px] relative"
+                  initial={{ opacity: 0, x: 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <div className="relative h-full">
+                    <Image
+                      unoptimized={true}
+                      src={section.image.url}
+                      alt={section.image.alt}
+                      width={600}
+                      height={600}
+                      className="w-full h-full object-cover rounded-2xl"
+                    />
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  className="md:w-1/2 relative bg-gray-200 h-[600px] max-w-[600px] rounded-sm"
+                  initial={{ opacity: 0, x: 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                    Image placeholder
+                  </div>
                 </motion.div>
               )}
             </div>

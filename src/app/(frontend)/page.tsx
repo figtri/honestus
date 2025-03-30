@@ -20,7 +20,6 @@ interface Section {
     width?: number | null
     height?: number | null
   }
-  backgroundColor?: string
   order: number
   spotifyUrls?: (string | { url: string })[]
   featuredPosts?: {
@@ -117,7 +116,6 @@ const sampleSections = [
       width: 1200,
       height: 800,
     },
-    backgroundColor: '#2D4F3F',
     order: 1,
   },
   {
@@ -177,7 +175,6 @@ const sampleSections = [
       width: 800,
       height: 800,
     },
-    backgroundColor: '#1F3B2F',
     order: 2,
   },
   {
@@ -213,7 +210,6 @@ const sampleSections = [
         version: 1,
       },
     },
-    backgroundColor: '#2A4539',
     order: 3,
     articles: [
       {
@@ -278,7 +274,6 @@ const sampleSections = [
         version: 1,
       },
     },
-    backgroundColor: '#152A20',
     order: 4,
     spotifyUrls: [
       'https://open.spotify.com/embed/episode/1oYUMrg3pp23Cl2X25mqjq',
@@ -318,7 +313,6 @@ const sampleSections = [
         version: 1,
       },
     },
-    backgroundColor: '#2D4F3F',
     order: 5,
   },
 ] as unknown as Section[]
@@ -456,7 +450,6 @@ export default async function Home() {
         type: doc.type as Section['type'],
         content: doc.content,
         image: imageData,
-        backgroundColor: doc.backgroundColor || '#2D4F3F',
         order: doc.order,
         spotifyUrls: doc.spotifyUrls || [],
         articles: doc.articles || [],
