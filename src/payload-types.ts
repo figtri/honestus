@@ -244,6 +244,10 @@ export interface Post {
   };
   publishedAt?: string | null;
   authors?: (number | User)[] | null;
+  /**
+   * Estimated reading time in minutes
+   */
+  readingTime?: number | null;
   populatedAuthors?:
     | {
         id?: string | null;
@@ -1226,6 +1230,7 @@ export interface PostsSelect<T extends boolean = true> {
       };
   publishedAt?: T;
   authors?: T;
+  readingTime?: T;
   populatedAuthors?:
     | T
     | {
