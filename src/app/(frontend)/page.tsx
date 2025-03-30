@@ -2,7 +2,6 @@ import React from 'react'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import configPromise from '@payload-config'
-import { LandingSections } from '@/components/LandingPage/LandingSections'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -340,7 +339,7 @@ export default async function Home() {
       const orderedSections = sampleSections.sort((a, b) => a.order - b.order)
 
       return (
-        <main>
+        <main className="w-full">
           {orderedSections.map((section) => (
             <LandingSection key={section.id} section={section} />
           ))}
@@ -459,7 +458,7 @@ export default async function Home() {
     })
 
     return (
-      <main>
+      <main className="w-full">
         {sections.map((section) => (
           <LandingSection key={section.id} section={section} />
         ))}

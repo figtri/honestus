@@ -18,6 +18,21 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [scrolled])
 
   useEffect(() => {
     setHeaderTheme(null)
@@ -30,12 +45,17 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   }, [headerTheme])
 
   return (
-    <header className="container relative z-20   " {...(theme ? { 'data-theme': theme } : {})}>
-      <div className="py-8 flex justify-between">
-        <Link href="/">
-          <Logo loading="eager" priority="high" className="invert dark:invert-0" />
-        </Link>
-        <HeaderNav data={data} />
+    <header
+      className="w-full absolute top-0 left-0 z-50 transition-all duration-300"
+      {...(theme ? { 'data-theme': theme } : {})}
+    >
+      <div className="container mx-auto px-4">
+        <div className="py-4 flex justify-between items-center bg-transparent">
+          <Link href="/" className="text-white">
+            <Logo loading="eager" priority="high" className="text-white" />
+          </Link>
+          <HeaderNav data={data} />
+        </div>
       </div>
     </header>
   )

@@ -10,7 +10,20 @@ const config = {
     './src/**/*.{ts,tsx}',
   ],
   darkMode: ['selector', '[data-theme="dark"]'],
-  plugins: [tailwindcssAnimate, typography],
+  plugins: [
+    tailwindcssAnimate,
+    typography,
+    function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'text-shadow': (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme('textShadow') },
+      )
+    },
+  ],
   prefix: '',
   safelist: [
     'lg:col-span-4',
@@ -59,6 +72,12 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      textShadow: {
+        sm: '0 1px 2px rgba(0, 0, 0, 0.2)',
+        DEFAULT: '0 2px 4px rgba(0, 0, 0, 0.3)',
+        lg: '0 4px 8px rgba(0, 0, 0, 0.4)',
+        white: '0 2px 4px rgba(255, 255, 255, 0.3)',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -115,6 +134,7 @@ const config = {
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
         sans: ['var(--font-geist-sans)'],
+        caveat: ['var(--font-caveat)', 'cursive'],
       },
       keyframes: {
         'accordion-down': {

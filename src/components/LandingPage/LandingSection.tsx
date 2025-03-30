@@ -8,13 +8,6 @@ import Link from 'next/link'
 import { SpotifyEmbed } from '@/components/SpotifyEmbed'
 import { TestimonialsSection, Testimonial } from './TestimonialsSection'
 
-// Fig Tree SVG elements for the decorative design elements
-const FigLeafDecoration = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className} fill="currentColor" aria-hidden="true">
-    <path d="M50,3C27.4,3,9,21.4,9,44c0,22.6,18.4,41,41,41s41-18.4,41-41C91,21.4,72.6,3,50,3z M75.4,43.5c-1.4,4.2-4.2,7.6-8,9.9 c-3.8,2.3-8.1,3-12.4,2.2c-1.2-0.2-2.1-1.1-2.3-2.3c-0.2-1.2,0.5-2.4,1.6-2.8c5.5-2.2,9.4-7.3,10.1-13.1c0.1-1.2,1.1-2.1,2.3-2.2 c1.2-0.1,2.3,0.6,2.6,1.8C70.2,40.5,73,42.4,75.4,43.5z" />
-  </svg>
-)
-
 export interface Section {
   id: string
   title: string
@@ -68,13 +61,14 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
         return '#2D4F3F' // Medium Fig Green
       case 'about':
         return '#1F3B2F' // Darker Fig Green
-      case 'cta':
-        return '#E27145' // Burnt Orange
+
       case 'testimonials':
         return '#e8e3ce' // Light Beige
       case 'featured':
       case 'spotify':
         return '#152A20' // Dark Fig Green - shared between featured and spotify
+      case 'cta':
+        return '#E27145' // Burnt Orange
       case 'articles':
         return '#2A4539' // Another shade of Fig Green
       default:
@@ -108,13 +102,14 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                   priority
                 />
 
-                {/* Simple vignette */}
+                {/* Simple vignette with subtle gradient at top */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_60%,_rgba(0,0,0,0.3)_100%)]"></div>
+                <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-black/20 to-transparent z-10"></div>
               </motion.div>
             )}
 
             {/* Content container with improved layout */}
-            <div className="container mx-auto px-6 py-16 z-20 relative">
+            <div className="container mx-auto px-6 py-16 pt-28 z-20 relative">
               <motion.div
                 className="max-w-3xl"
                 initial={{ opacity: 0, y: 20 }}
@@ -323,13 +318,12 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
 
       case 'spotify':
         return (
-          <div className="py-20 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
+          <div className="py-20 pb-0 relative overflow-hidden" style={{ backgroundColor: bgColor }}>
             {/* Background decoration */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#101c16] to-[#152A20]"></div>
             <div className="absolute top-0 right-0 w-full h-40 bg-gradient-to-b from-emerald-900/20 to-transparent"></div>
-            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-emerald-900/20 to-transparent"></div>
 
-            <div className="container mx-auto px-4 relative z-10">
+            <div className="container mx-auto px-4 relative z-20 pb-20">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}

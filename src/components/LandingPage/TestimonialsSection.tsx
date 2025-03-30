@@ -49,7 +49,7 @@ export function TestimonialsSection({
   }
 
   return (
-    <section className="py-20 relative overflow-hidden bg-[#E27145]">
+    <section className="pb-5 relative overflow-hidden bg-[#E27145]">
       <div className="max-w-4xl mx-auto text-center relative px-6">
         <StaggeredAnimation delay={100} direction="up" distance={20}>
           <h2 className="text-4xl font-bold mb-10">{title}</h2>
@@ -84,7 +84,7 @@ export function TestimonialsSection({
               </div>
             </div>
 
-            <div className="h-[380px] relative overflow-hidden mb-8">
+            <div className="min-h-[380px] relative overflow-hidden mb-8">
               {testimonials.map((testimonial, index) => (
                 <div
                   key={testimonial.id}
@@ -98,9 +98,11 @@ export function TestimonialsSection({
                     }`}
                 >
                   <div className="h-full flex flex-col justify-between">
-                    <p className="text-xl">{testimonial.quote}</p>
+                    <div className="mb-8">
+                      <p className="text-xl">{testimonial.quote}</p>
+                    </div>
 
-                    <div className="flex flex-col items-center justify-center mt-8">
+                    <div className="flex flex-col items-center justify-center mt-auto">
                       <Avatar className="h-24 w-24 mb-4 border-2 border-amber-500 flex items-center justify-center">
                         {testimonial.image ? (
                           <AvatarImage
