@@ -380,7 +380,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                     return (
                       <motion.div
                         key={index}
-                        className="bg-gradient-to-r from-emerald-800/50 to-emerald-800/30 border border-emerald-700/30 rounded-xl overflow-hidden shadow-lg"
+                        className="bg-gradient-to-r from-emerald-800/50 to-emerald-800/30 border border-emerald-700/30 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
