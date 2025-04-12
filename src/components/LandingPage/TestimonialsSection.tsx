@@ -50,7 +50,7 @@ export function TestimonialsSection({
 
   return (
     <section className="relative overflow-hidden bg-[#E27145]">
-      <div className="max-w-4xl mx-auto text-center relative px-6 pb-5">
+      <div className="max-w-4xl mx-auto text-center relative px-6 py-10">
         <StaggeredAnimation delay={100} direction="up" distance={20}>
           <h2 className="text-4xl font-bold mb-10 text-white">{title}</h2>
         </StaggeredAnimation>

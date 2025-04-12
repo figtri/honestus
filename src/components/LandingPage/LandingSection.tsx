@@ -63,7 +63,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
         return '#1F3B2F' // Darker Fig Green
 
       case 'testimonials':
-        return '#e8e3ce' // Light Beige
+        return '#E27145' // Light Beige
       case 'featured':
       case 'spotify':
         return '#152A20' // Dark Fig Green - shared between featured and spotify
@@ -446,7 +446,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h2 className="text-5xl sm:text-6xl font-bold text-black leading-tight">
+                  <h2 className="text-5xl sm:text-6xl font-bold text-[#E27145] leading-tight">
                     Your Words, <br />
                     Our Witness
                   </h2>
