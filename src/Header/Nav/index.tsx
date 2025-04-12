@@ -23,6 +23,12 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
           />
         )
       })}
+      <Link href="/about" className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow">
+        About
+      </Link>
+      <Link href="/shop" className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow">
+        Shop
+      </Link>
       <Link href="/search" className="text-white hover:text-white/80 transition-colors text-shadow">
         <span className="sr-only">Search</span>
         <SearchIcon className="w-4 h-4" />

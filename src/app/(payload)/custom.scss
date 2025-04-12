@@ -1,0 +1,35 @@
+/* Fig-inspired theme overrides for Payload Admin UI */
+
+/* Light Theme Overrides */
+:root {
+  --theme-bg: hsl(280 15% 96%); /* fig-neutral-light-hsl */
+  --theme-text: hsl(280 35% 25%); /* fig-text-light-hsl */
+  --theme-border-color: hsl(280 15% 85%); 
+  --theme-primary-500: hsl(280 45% 35%); /* fig-purple-hsl */
+  --theme-primary-700: hsl(280 45% 25%);
+  --theme-nav-bg: hsl(280 20% 92%); 
+  --theme-sidebar-bg: hsl(280 15% 96%); /* fig-neutral-light-hsl */
+  --theme-elevation-50: hsl(0 0% 100%);
+  --theme-elevation-100: hsl(280 15% 96%); /* fig-neutral-light-hsl */
+  --theme-elevation-200: hsl(280 15% 94%);
+  --theme-elevation-300: hsl(280 15% 92%);
+  --theme-success-400: hsl(150 45% 45%); /* fig-green-hsl */
+  --theme-success-500: hsl(150 45% 25%); /* fig-green-dark-hsl */
+}
+
+/* Dark Theme Overrides */
+[data-theme='dark'] {
+  --theme-bg: hsl(280 20% 15%); /* fig-neutral-dark-hsl */
+  --theme-text: hsl(280 15% 90%); /* fig-text-dark-hsl */
+  --theme-border-color: hsl(280 20% 25%);
+  --theme-primary-500: hsl(280 45% 65%); /* fig-purple-light-hsl */
+  --theme-primary-700: hsl(280 45% 35%); /* fig-purple-hsl */
+  --theme-nav-bg: hsl(280 35% 10%);
+  --theme-sidebar-bg: hsl(280 20% 15%); /* fig-neutral-dark-hsl */
+  --theme-elevation-50: hsl(280 20% 10%);
+  --theme-elevation-100: hsl(280 20% 15%); /* fig-neutral-dark-hsl */
+  --theme-elevation-200: hsl(280 20% 20%);
+  --theme-elevation-300: hsl(280 20% 25%);
+  --theme-success-400: hsl(150 45% 45%); /* fig-green-hsl */
+  --theme-success-500: hsl(150 45% 55%); /* Lighter green for dark mode */
+}

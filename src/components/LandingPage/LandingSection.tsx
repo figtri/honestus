@@ -68,7 +68,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
       case 'spotify':
         return '#152A20' // Dark Fig Green - shared between featured and spotify
       case 'cta':
-        return '#E27145' // Burnt Orange
+        return '#291f2e' // Burnt Orange
       case 'articles':
         return '#2A4539' // Another shade of Fig Green
       default:
@@ -146,7 +146,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                     className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white rounded-full text-lg font-semibold hover:from-emerald-500 hover:to-emerald-400 transition-all duration-300 shadow-lg"
                   >
                     <span className="flex items-center">
-                      Explore
+                    Book a Story Session
                       <svg
                         className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
                         fill="none"
