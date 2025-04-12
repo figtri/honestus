@@ -23,6 +23,8 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
+    // Custom theme - using 'dark' mode since our colors fit better with a dark theme
+    theme: 'dark',
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.

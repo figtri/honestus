@@ -1,13 +1,12 @@
 'use client'
 import React from 'react'
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 import RichText from '@/components/RichText'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import Link from 'next/link'
 import { SpotifyEmbed } from '@/components/SpotifyEmbed'
 import { TestimonialsSection, Testimonial } from './TestimonialsSection'
-
+import { motion } from 'framer-motion'
 export interface Section {
   id: string
   title: string
@@ -461,7 +460,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
 
                   <Link
                     href="/contact"
-                    className="mt-8 inline-flex items-center px-5 py-3 bg-black text-white text-sm font-medium rounded-sm hover:bg-black/80 transition-colors duration-300"
+                    className="mt-8 inline-flex items-center px-5 py-3 bg-black text-white text-sm font-medium rounded-2xl hover:bg-black/80 transition-colors duration-300"
                   >
                     SHARE YOUR STORY
                   </Link>
