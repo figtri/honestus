@@ -22,6 +22,10 @@ const nextConfig = {
         hostname: 'images.unsplash.com',
         protocol: 'https',
       },
+      {
+        hostname: 'i.etsystatic.com',
+        protocol: 'https',
+      },
     ],
   },
   reactStrictMode: true,
