@@ -32,11 +32,18 @@ const LandingPage: CollectionConfig = {
       name: 'content',
       type: 'richText',
       required: true,
+      admin: {
+        condition: (data) => !
+          ['testimonials', 'featured', 'articles', 'spotify'].includes(data.type),
+      },
     },
     {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
+      admin: {
+        condition: (data) => ['hero', 'cta', 'about'].includes(data.type),
+      }
     },
     {
       name: 'order',

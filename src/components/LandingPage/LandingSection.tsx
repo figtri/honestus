@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { SpotifyEmbed } from '@/components/SpotifyEmbed'
 import { TestimonialsSection, Testimonial } from './TestimonialsSection'
 import { motion } from 'framer-motion'
+
 export interface Section {
   id: string
   title: string
@@ -502,6 +503,12 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
             </div>
           </div>
         )
+
+      case 'articles':
+        return null
+
+      default:
+        return null
     }
   }
 
