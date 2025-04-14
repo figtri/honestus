@@ -26,7 +26,7 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
       <Link href="/about" className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow">
         About
       </Link>
-      <Link href="/work-with-me" className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow">
+      <Link href="/services" className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow">
         Services
       </Link>
       <Link href="/shop" className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow">
