@@ -3,7 +3,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Users, PenSquare, ArrowRight, Star } from 'lucide-react'
-import Image from 'next/image'
 
 // Hardcoded content for the Work With Me page
 const pageTitle = 'Work With Us'
@@ -17,7 +16,7 @@ const packages = [
     description: `
       <p><strong>For:</strong> Teams, small businesses, NGOs, creatives</p>
       <p><strong>Includes:</strong> 60–90 min virtual workshop + PDF workbook</p>
-      <p><strong>Goal:</strong> Help participants uncover their brand/personal story using the "Roots to Fruits" model</p>
+      <p><strong>Goal:</strong> Help participants uncover their brand/personal story using the &ldquo;Roots to Fruits&rdquo; model</p>
     `,
     features: [
       "Interactive virtual session",
@@ -35,7 +34,7 @@ const packages = [
     description: `
       <p><strong>For:</strong> Entrepreneurs, coaches, creators, founders</p>
       <p><strong>Includes:</strong> 30-min interview → brand bio/About Me page copy + graphic asset</p>
-      <p><strong>Framed as:</strong> A mini deep-dive into your story's origin and purpose</p>
+      <p><strong>Framed as:</strong> A mini deep-dive into your story&apos;s origin and purpose</p>
     `,
     features: [
       "Personal interview session",
@@ -47,12 +46,6 @@ const packages = [
     ctaLink: 'mailto:kayla@honestus.world?subject=Inquiry: Brand Story Package',
   },
 ]
-
-// Animation variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
-}
 
 const WorkWithMePage = () => {
   return (
@@ -160,7 +153,7 @@ const WorkWithMePage = () => {
               
               {/* Features list */}
               <div className="mb-8 bg-white/[0.02] p-5 rounded-xl">
-                <h3 className="text-sm uppercase text-emerald-400/90 mb-4 tracking-wider font-medium">What's included</h3>
+                <h3 className="text-sm uppercase text-emerald-400/90 mb-4 tracking-wider font-medium">What&apos;s included</h3>
                 <ul className="space-y-3">
                   {pkg.features.map((feature, i) => (
                     <li
@@ -205,7 +198,7 @@ const WorkWithMePage = () => {
           transition={{ duration: 0.7, delay: 0.5 }}
         >
           <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-emerald-300">Ready to tell your story?</h2>
-          <p className="text-gray-300 mb-6">Let's collaborate to uncover and share the authentic narrative that sets you or your brand apart.</p>
+          <p className="text-gray-300 mb-6">Let&apos;s collaborate to uncover and share the authentic narrative that sets you or your brand apart.</p>
           <a
             href="mailto:kayla@honestus.world?subject=Inquiry from Website"
             className="inline-flex items-center px-6 py-3 bg-emerald-500 text-white rounded-lg text-base font-medium hover:bg-emerald-400 transition-colors duration-300 shadow-lg hover:shadow-emerald-700/40"

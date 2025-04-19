@@ -16,7 +16,7 @@ const ThemeContext = createContext(initialContext)
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setThemeState] = useState<Theme>('dark')
 
-  const setTheme = useCallback((themeToSet: Theme | null) => {
+  const setTheme = useCallback((_themeToSet: Theme | null) => {
     const finalTheme: Theme = 'dark'
     setThemeState(finalTheme)
     if (canUseDOM) {
