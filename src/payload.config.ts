@@ -1,6 +1,6 @@
 // storage-adapter-import-placeholder
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
-import { vercelBlobStorage } from '@payloadcms/storage-adapter-vercel-blob'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
@@ -67,7 +67,7 @@ export default buildConfig({
       url: process.env.DATABASE_URI || '',
       authToken: process.env.DATABASE_AUTH_TOKEN || '',
     },
-  }),
+  }) as any,
   collections: [Pages, Posts, Media, Categories, Users, LandingSections],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
@@ -76,7 +76,11 @@ export default buildConfig({
       enabled: true,
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
       access: 'public',
-      collections: ['media'],
+      collections: {
+        media: {
+          access: 'public',
+        },
+      },
     }),
     ...plugins,
     // storage-adapter-placeholder

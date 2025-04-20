@@ -21,7 +21,7 @@
     "incremental": true,
     "jsx": "preserve",
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "sourceMap": true,
     "isolatedModules": true,
@@ -34,13 +34,21 @@
       "@payload-config": [
         "./src/payload.config.ts"
       ],
-      "react": [
-        "./node_modules/@types/react"
-      ],
       "@/*": [
         "./src/*"
       ],
-    }
+      "payload/generated-types": [
+        "./src/payload-types.ts"
+      ],
+      "@vercel/blob": [
+        "./node_modules/@vercel/blob"
+      ]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
+    "types": ["node"]
   },
   "include": [
     "**/*.ts",
@@ -48,7 +56,9 @@
     ".next/types/**/*.ts",
     "redirects.js",
     "next.config.js",
-    "next-sitemap.config.cjs"
+    "next-sitemap.config.cjs",
+    "src/payload-types.ts",
+    "src/types/**/*.d.ts"
   ],
   "exclude": [
     "node_modules"
