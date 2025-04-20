@@ -26,6 +26,10 @@ const nextConfig = {
         hostname: 'i.etsystatic.com',
         protocol: 'https',
       },
+      {
+        hostname: 'placehold.co',
+        protocol: 'https',
+      },
     ],
   },
   reactStrictMode: true,
