@@ -33,7 +33,7 @@ export const LandingSections: CollectionConfig = {
     {
       name: 'content',
       type: 'richText',
-      required: true,
+      required: false,
       editor: defaultLexical,
     },
     {
