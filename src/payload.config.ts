@@ -79,6 +79,7 @@ export default buildConfig({
       collections: {
         media: true,
       },
+      clientUploads: true,
     }),
     ...plugins,
     // storage-adapter-placeholder
