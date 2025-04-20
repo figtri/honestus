@@ -92,6 +92,9 @@ importers:
       graphql:
         specifier: ^16.8.2
         version: 16.10.0
+      lexical:
+        specifier: link:@payloadcms/richtext-lexical/lexical
+        version: link:@payloadcms/richtext-lexical/lexical
       libsql:
         specifier: ^0.5.7
         version: 0.5.7

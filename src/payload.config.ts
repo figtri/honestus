@@ -77,9 +77,7 @@ export default buildConfig({
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
       access: 'public',
       collections: {
-        media: {
-          access: 'public',
-        },
+        media: true,
       },
     }),
     ...plugins,
