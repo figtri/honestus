@@ -5,8 +5,9 @@ import type { PayloadAdminBarProps, PayloadMeUser } from '@payloadcms/admin-bar'
 import { cn } from '@/utilities/ui'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { PayloadAdminBar } from '@payloadcms/admin-bar'
-import React, { useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/navigation'
+import { useAuthVisibility } from '@/providers/AuthVisibility'
 
 import './index.scss'
 
@@ -36,21 +37,21 @@ export const AdminBar: React.FC<{
 }> = (props) => {
   const { adminBarProps } = props || {}
   const segments = useSelectedLayoutSegments()
-  const [show, setShow] = useState(false)
+  const { isUserLoggedIn, setIsUserLoggedIn } = useAuthVisibility()
   const collection = (
     collectionLabels[segments?.[1] as keyof typeof collectionLabels] ? segments[1] : 'pages'
   ) as keyof typeof collectionLabels
   const router = useRouter()
 
-  const onAuthChange = React.useCallback((user: PayloadMeUser) => {
-    setShow(Boolean(user?.id))
-  }, [])
+  const onAuthChange = React.useCallback((user: PayloadMeUser | null | undefined) => {
+    setIsUserLoggedIn(Boolean(user?.id))
+  }, [setIsUserLoggedIn])
 
   return (
     <div
       className={cn(baseClass, 'py-2 bg-black text-white', {
-        block: show,
-        hidden: !show,
+        block: isUserLoggedIn,
+        hidden: !isUserLoggedIn,
       })}
     >
       <div className="container">

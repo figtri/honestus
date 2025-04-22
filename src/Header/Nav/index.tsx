@@ -1,6 +1,8 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
+// import { useAuth } from '@payloadcms/ui'
+import { useAuthVisibility } from '@/providers/AuthVisibility'
 
 import type { Header as HeaderType } from '@/payload-types'
 
@@ -9,7 +11,13 @@ import Link from 'next/link'
 import { SearchIcon } from 'lucide-react'
 
 export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
+  // console.log('HeaderNav component rendering on client')
   const navItems = data?.navItems || []
+  // const { user } = useAuth()
+  const { isUserLoggedIn } = useAuthVisibility()
+
+  useEffect(() => {
+  }, [isUserLoggedIn])
 
   return (
     <nav className="flex gap-4 items-center">
@@ -36,12 +44,14 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
         <span className="sr-only">Search</span>
         <SearchIcon className="w-4 h-4" />
       </Link>
-      <Link
-        href="/admin"
-        className="ml-2 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white text-sm font-medium rounded transition-all border border-white/20 backdrop-blur-sm text-shadow-sm"
-      >
-        Dashboard
-      </Link>
+      {isUserLoggedIn && (
+        <Link
+          href="/admin"
+          className="ml-2 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white text-sm font-medium rounded transition-all border border-white/20 backdrop-blur-sm text-shadow-sm"
+        >
+          Dashboard
+        </Link>
+      )}
     </nav>
   )
 }
