@@ -80,6 +80,23 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
   }
 
   const bgColor = getBackgroundColor()
+  
+  // Move state declarations outside of renderSection
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
+  const handleFormSubmit = (status: 'success' | 'error') => {
+    setFormStatus(status)
+    if (status === 'success') {
+      // Keep the modal open but show success message
+      // It will close automatically after 3 seconds
+      setTimeout(() => {
+        setIsModalOpen(false)
+        // Reset form status after modal is closed
+        setTimeout(() => setFormStatus('idle'), 500)
+      }, 3000)
+    }
+  }
 
   const renderSection = () => {
     switch (section.type) {
@@ -436,22 +453,6 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
         )
 
       case 'cta':
-        const [isModalOpen, setIsModalOpen] = useState(false)
-        const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle')
-
-        const handleFormSubmit = (status: 'success' | 'error') => {
-          setFormStatus(status)
-          if (status === 'success') {
-            // Keep the modal open but show success message
-            // It will close automatically after 3 seconds
-            setTimeout(() => {
-              setIsModalOpen(false)
-              // Reset form status after modal is closed
-              setTimeout(() => setFormStatus('idle'), 500)
-            }, 3000)
-          }
-        }
-
         return (
           <div
             className="py-16 relative overflow-hidden"
