@@ -88,6 +88,7 @@ export default buildConfig({
         media: true,
       },
       bucket: process.env.S3_BUCKET || '',
+      clientUploads: true,
       config:{
         credentials: {
           accessKeyId: process.env.S3_ACCESS_KEY_ID || '',

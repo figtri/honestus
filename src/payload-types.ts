@@ -741,7 +741,7 @@ export interface LandingSection {
   id: number;
   title: string;
   type: 'hero' | 'featured' | 'about' | 'cta' | 'testimonials' | 'articles' | 'spotify';
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -755,7 +755,7 @@ export interface LandingSection {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   image?: (number | null) | Media;
   /**
    * Order of appearance on the landing page
