@@ -73,6 +73,7 @@ export interface Config {
     categories: Category;
     users: User;
     'landing-sections': LandingSection;
+    'feature-requests': FeatureRequest;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -90,6 +91,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'landing-sections': LandingSectionsSelect<false> | LandingSectionsSelect<true>;
+    'feature-requests': FeatureRequestsSelect<false> | FeatureRequestsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -820,6 +822,50 @@ export interface LandingSection {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feature-requests".
+ */
+export interface FeatureRequest {
+  id: number;
+  /**
+   * The name of the person submitting the request
+   */
+  name: string;
+  /**
+   * The email address of the person submitting the request
+   */
+  email: string;
+  /**
+   * LinkedIn URL (optional)
+   */
+  linkedinUrl?: string | null;
+  /**
+   * Website URL (optional)
+   */
+  websiteUrl?: string | null;
+  /**
+   * The reason for the request
+   */
+  reason: string;
+  /**
+   * Detailed description of the request
+   */
+  description: string;
+  /**
+   * The current status of the request
+   */
+  status: 'new' | 'in-progress' | 'completed' | 'declined';
+  /**
+   * When the request was submitted
+   */
+  createdAt: string;
+  /**
+   * Internal notes about this request
+   */
+  notes?: string | null;
+  updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1013,6 +1059,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'landing-sections';
         value: number | LandingSection;
+      } | null)
+    | ({
+        relationTo: 'feature-requests';
+        value: number | FeatureRequest;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1411,6 +1461,22 @@ export interface LandingSectionsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feature-requests_select".
+ */
+export interface FeatureRequestsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  linkedinUrl?: T;
+  websiteUrl?: T;
+  reason?: T;
+  description?: T;
+  status?: T;
+  createdAt?: T;
+  notes?: T;
+  updatedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

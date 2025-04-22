@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect } from 'react'
-// import { useAuth } from '@payloadcms/ui'
 import { useAuthVisibility } from '@/providers/AuthVisibility'
 
 import type { Header as HeaderType } from '@/payload-types'
@@ -11,13 +10,8 @@ import Link from 'next/link'
 import { SearchIcon } from 'lucide-react'
 
 export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
-  // console.log('HeaderNav component rendering on client')
   const navItems = data?.navItems || []
-  // const { user } = useAuth()
   const { isUserLoggedIn } = useAuthVisibility()
-
-  useEffect(() => {
-  }, [isUserLoggedIn])
 
   return (
     <nav className="flex gap-4 items-center">

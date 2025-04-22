@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import RichText from '@/components/RichText'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { SpotifyEmbed } from '@/components/SpotifyEmbed'
 import { TestimonialsSection, Testimonial } from './TestimonialsSection'
 import { motion } from 'framer-motion'
+import { FeatureRequestForm } from '@/components/FeatureRequestForm'
+import { Modal } from '@/components/Modal'
 
 export interface Section {
   id: string
@@ -434,6 +436,22 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
         )
 
       case 'cta':
+        const [isModalOpen, setIsModalOpen] = useState(false)
+        const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
+        const handleFormSubmit = (status: 'success' | 'error') => {
+          setFormStatus(status)
+          if (status === 'success') {
+            // Keep the modal open but show success message
+            // It will close automatically after 3 seconds
+            setTimeout(() => {
+              setIsModalOpen(false)
+              // Reset form status after modal is closed
+              setTimeout(() => setFormStatus('idle'), 500)
+            }, 3000)
+          }
+        }
+
         return (
           <div
             className="py-16 relative overflow-hidden"
@@ -459,12 +477,12 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                     </p>
                   </div>
 
-                  <Link
-                    href="/contact"
+                  <button
+                    onClick={() => setIsModalOpen(true)}
                     className="mt-8 inline-flex items-center px-5 py-3 bg-black text-white text-sm font-medium rounded-2xl hover:bg-black/80 transition-colors duration-300"
                   >
                     SHARE YOUR STORY
-                  </Link>
+                  </button>
                 </motion.div>
               </div>
 
@@ -501,6 +519,12 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                 </motion.div>
               )}
             </div>
+
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+              <div>
+                <FeatureRequestForm onSubmitStatus={handleFormSubmit} />
+              </div>
+            </Modal>
           </div>
         )
 

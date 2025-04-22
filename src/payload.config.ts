@@ -18,6 +18,7 @@ import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { LandingSections } from './collections/LandingSections'
+import FeatureRequests from './collections/FeatureRequests'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -69,7 +70,7 @@ export default buildConfig({
       authToken: process.env.DATABASE_AUTH_TOKEN || '',
     },
   }) as any,
-  collections: [Pages, Posts, Media, Categories, Users, LandingSections],
+  collections: [Pages, Posts, Media, Categories, Users, LandingSections, FeatureRequests],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
