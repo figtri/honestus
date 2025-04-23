@@ -473,7 +473,16 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                         Our Witness
                       </>
                     ) : (
-                      section.title
+                      section.title?.split(',').map((part, index, array) => (
+                        <React.Fragment key={index}>
+                          {part.trim()}
+                          {index < array.length - 1 && (
+                            <>
+                              ,<br />
+                            </>
+                          )}
+                        </React.Fragment>
+                      ))
                     )}
                   </h2>
                   <div className="mt-8 text-xl text-white">
