@@ -467,15 +467,10 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                   transition={{ duration: 0.5 }}
                 >
                   <h2 className="text-5xl sm:text-6xl font-bold text-[#E27145] leading-tight">
-                    Your Words, <br />
-                    Our Witness
+                    {section.title || "Your Words, Our Witness"}
                   </h2>
                   <div className="mt-8 text-xl text-white">
-                    <p>
-                      Behind every face is a narrative worth preserving. <br />
-                      Your experiences, challenges, and triumphs <br />
-                      deserve to be heard and remembered.
-                    </p>
+                    <RichText data={section.content} enableGutter={false} />
                   </div>
 
                   <button
