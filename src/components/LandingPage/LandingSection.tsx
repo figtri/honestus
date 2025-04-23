@@ -162,7 +162,9 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
                   <Link
-                    href="/posts"
+                    href="https://calendly.com/kayla-honestus/30min"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white rounded-full text-lg font-semibold hover:from-emerald-500 hover:to-emerald-400 transition-all duration-300 shadow-lg"
                   >
                     <span className="flex items-center">
