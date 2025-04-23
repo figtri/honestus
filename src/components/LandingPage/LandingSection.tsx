@@ -467,7 +467,14 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                   transition={{ duration: 0.5 }}
                 >
                   <h2 className="text-5xl sm:text-6xl font-bold text-[#E27145] leading-tight">
-                    {section.title || "Your Words, Our Witness"}
+                    {section.title?.includes("Your Words, Our Witness") ? (
+                      <>
+                        Your Words, <br />
+                        Our Witness
+                      </>
+                    ) : (
+                      section.title
+                    )}
                   </h2>
                   <div className="mt-8 text-xl text-white">
                     <RichText data={section.content} enableGutter={false} />
