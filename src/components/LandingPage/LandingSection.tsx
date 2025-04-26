@@ -80,10 +80,10 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
   }
 
   const bgColor = getBackgroundColor()
-  
+
   // Move state declarations outside of renderSection
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [_formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleFormSubmit = (status: 'success' | 'error') => {
     setFormStatus(status)
@@ -168,7 +168,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                     className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white rounded-full text-lg font-semibold hover:from-emerald-500 hover:to-emerald-400 transition-all duration-300 shadow-lg"
                   >
                     <span className="flex items-center">
-                    Book a Story Session
+                      Book a Story Session
                       <svg
                         className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
                         fill="none"
@@ -469,7 +469,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                   transition={{ duration: 0.5 }}
                 >
                   <h2 className="text-5xl sm:text-6xl font-bold text-[#E27145] leading-tight">
-                    {section.title?.includes("Your Words, Our Witness") ? (
+                    {section.title?.includes('Your Words, Our Witness') ? (
                       <>
                         Your Words, <br />
                         Our Witness
