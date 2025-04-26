@@ -18,6 +18,7 @@ const getPostsSitemap = unstable_cache(
       depth: 0,
       limit: 1000,
       pagination: false,
+      sort: '-publishedAt',
       where: {
         _status: {
           equals: 'published',
@@ -26,6 +27,7 @@ const getPostsSitemap = unstable_cache(
       select: {
         slug: true,
         updatedAt: true,
+        publishedAt: true,
       },
     })
 
@@ -36,7 +38,7 @@ const getPostsSitemap = unstable_cache(
           .filter((post) => Boolean(post?.slug))
           .map((post) => ({
             loc: `${SITE_URL}/posts/${post?.slug}`,
-            lastmod: post.updatedAt || dateFallback,
+            lastmod: post.publishedAt || post.updatedAt || dateFallback,
           }))
       : []
 
