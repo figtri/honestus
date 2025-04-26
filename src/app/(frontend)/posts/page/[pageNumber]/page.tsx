@@ -35,15 +35,21 @@ export default async function Page({ params: paramsPromise }: Args) {
   })
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="py-20 relative overflow-hidden" style={{ backgroundColor: '#152A20' }}>
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#1e3d2b] to-[#152A20]"></div>
+      <div className="absolute top-0 right-0 w-full h-40 bg-gradient-to-b from-emerald-900/20 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-emerald-900/20 to-transparent"></div>
+
       <PageClient />
-      <div className="container mb-16">
+      <div className="container relative z-10 mb-16">
         <div className="prose dark:prose-invert max-w-none">
-          <h1>Posts</h1>
+          <h1 className="text-4xl font-bold text-white">Posts</h1>
+          <div className="h-1 w-20 bg-emerald-500/70 rounded-full mt-2"></div>
         </div>
       </div>
 
-      <div className="container mb-8">
+      <div className="container relative z-10 mb-8">
         <PageRange
           collection="posts"
           currentPage={posts.page}
@@ -54,7 +60,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <CollectionArchive posts={posts.docs as unknown as Props['posts']} />
 
-      <div className="container">
+      <div className="container relative z-10">
         {posts?.page && posts?.totalPages > 1 && (
           <Pagination page={posts.page} totalPages={posts.totalPages} />
         )}
