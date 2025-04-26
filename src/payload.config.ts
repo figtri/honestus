@@ -1,10 +1,10 @@
 // storage-adapter-import-placeholder
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { vercelBlobStorage as _vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { s3Storage } from '@payloadcms/storage-s3'
 import sharp from 'sharp'
 import path from 'path'
-import { buildConfig, PayloadRequest } from 'payload'
+import { buildConfig, PayloadRequest, DatabaseAdapter } from 'payload'
 import { fileURLToPath } from 'url'
 
 import { Categories } from './collections/Categories'
@@ -74,7 +74,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
-    // vercelBlobStorage({ 
+    // vercelBlobStorage({
     //   enabled: true,
     //   token: process.env.BLOB_READ_WRITE_TOKEN || '',
     //   access: 'public',
@@ -89,14 +89,14 @@ export default buildConfig({
         media: true,
       },
       bucket: process.env.S3_BUCKET || '',
-      config:{
+      config: {
         credentials: {
           accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
         },
         endpoint: process.env.S3_ENDPOINT || '',
         region: 'auto',
-      }
+      },
     }),
 
     ...plugins,
