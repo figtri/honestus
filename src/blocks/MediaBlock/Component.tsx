@@ -17,10 +17,10 @@ type Props = MediaBlockProps & {
   imgClassName?: string
   staticImage?: StaticImageData
   disableInnerContainer?: boolean
-  alignment?: 'left' | 'center' | 'right'
-  float?: 'none' | 'left' | 'right'
+  alignment?: 'left' | 'center' | 'right' | null
+  float?: 'none' | 'left' | 'right' | null
   caption?: string | SerializedEditorState
-  size?: 'small' | 'medium' | 'large' | 'full'
+  size?: 'small' | 'medium' | 'large' | 'full' | null
 }
 
 export const MediaBlock: React.FC<Props> = (props) => {
