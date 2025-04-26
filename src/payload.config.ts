@@ -4,7 +4,7 @@ import { vercelBlobStorage as _vercelBlobStorage } from '@payloadcms/storage-ver
 import { s3Storage } from '@payloadcms/storage-s3'
 import sharp from 'sharp'
 import path from 'path'
-import { buildConfig, PayloadRequest, DatabaseAdapter } from 'payload'
+import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
 import { Categories } from './collections/Categories'
