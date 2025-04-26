@@ -497,6 +497,10 @@ export interface ContentBlock {
  */
 export interface MediaBlock {
   media: number | Media;
+  alignment?: ('left' | 'center' | 'right') | null;
+  float?: ('none' | 'left' | 'right') | null;
+  caption?: string | null;
+  size?: ('small' | 'medium' | 'large' | 'full') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -1233,6 +1237,10 @@ export interface ContentBlockSelect<T extends boolean = true> {
  */
 export interface MediaBlockSelect<T extends boolean = true> {
   media?: T;
+  alignment?: T;
+  float?: T;
+  caption?: T;
+  size?: T;
   id?: T;
   blockName?: T;
 }

@@ -5,6 +5,7 @@ import React from 'react'
 import RichText from '@/components/RichText'
 
 import type { MediaBlock as MediaBlockProps } from '@/payload-types'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
 import { Media } from '../../components/Media'
 
@@ -16,6 +17,10 @@ type Props = MediaBlockProps & {
   imgClassName?: string
   staticImage?: StaticImageData
   disableInnerContainer?: boolean
+  alignment?: 'left' | 'center' | 'right'
+  float?: 'none' | 'left' | 'right'
+  caption?: string | SerializedEditorState
+  size?: 'small' | 'medium' | 'large' | 'full'
 }
 
 export const MediaBlock: React.FC<Props> = (props) => {
@@ -27,10 +32,33 @@ export const MediaBlock: React.FC<Props> = (props) => {
     media,
     staticImage,
     disableInnerContainer,
+    alignment = 'center',
+    float = 'none',
+    caption,
+    size = 'medium',
   } = props
 
-  let caption
-  if (media && typeof media === 'object') caption = media.caption
+  // Define size classes
+  const sizeClasses = {
+    small: 'max-w-md',
+    medium: 'max-w-2xl',
+    large: 'max-w-4xl',
+    full: 'w-full',
+  }
+
+  // Define alignment classes
+  const alignmentClasses = {
+    left: 'text-left',
+    center: 'mx-auto text-center',
+    right: 'ml-auto text-right',
+  }
+
+  // Define float classes
+  const floatClasses = {
+    none: '',
+    left: 'float-left mr-6 mb-4',
+    right: 'float-right ml-6 mb-4',
+  }
 
   return (
     <div
@@ -39,6 +67,9 @@ export const MediaBlock: React.FC<Props> = (props) => {
         {
           container: enableGutter,
         },
+        sizeClasses[size as keyof typeof sizeClasses],
+        alignmentClasses[alignment as keyof typeof alignmentClasses],
+        floatClasses[float as keyof typeof floatClasses],
         className,
       )}
     >
@@ -49,17 +80,32 @@ export const MediaBlock: React.FC<Props> = (props) => {
           src={staticImage}
         />
       )}
+      {/* Handle caption from props */}
       {caption && (
         <div
           className={cn(
-            'mt-6',
+            'mt-3 text-sm text-gray-500 italic',
             {
               container: !disableInnerContainer,
             },
             captionClassName,
           )}
         >
-          <RichText data={caption} enableGutter={false} />
+          {typeof caption === 'string' ? caption : <RichText data={caption} enableGutter={false} />}
+        </div>
+      )}
+      {/* Handle media caption if no caption from props */}
+      {!caption && media && typeof media === 'object' && media.caption && (
+        <div
+          className={cn(
+            'mt-3 text-sm text-gray-500 italic',
+            {
+              container: !disableInnerContainer,
+            },
+            captionClassName,
+          )}
+        >
+          <RichText data={media.caption} enableGutter={false} />
         </div>
       )}
     </div>

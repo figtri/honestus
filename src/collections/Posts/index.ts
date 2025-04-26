@@ -94,7 +94,19 @@ export const Posts: CollectionConfig<'posts'> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    BlocksFeature({
+                      blocks: [
+                        Banner,
+                        Code,
+                        {
+                          ...MediaBlock,
+                          labels: {
+                            singular: 'Image Block (with alignment & float)',
+                            plural: 'Image Blocks',
+                          },
+                        },
+                      ],
+                    }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
