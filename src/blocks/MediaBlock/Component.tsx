@@ -19,7 +19,7 @@ type Props = MediaBlockProps & {
   disableInnerContainer?: boolean
   alignment?: 'left' | 'center' | 'right' | null
   float?: 'none' | 'left' | 'right' | null
-  caption?: string | SerializedEditorState
+  caption?: string | SerializedEditorState | null
   size?: 'small' | 'medium' | 'large' | 'full' | null
 }
 
