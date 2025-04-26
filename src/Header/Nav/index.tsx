@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useAuthVisibility } from '@/providers/AuthVisibility'
 
 import type { Header as HeaderType } from '@/payload-types'
@@ -25,13 +25,22 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
           />
         )
       })}
-      <Link href="/about" className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow">
+      <Link
+        href="/about"
+        className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow"
+      >
         About
       </Link>
-      <Link href="/services" className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow">
+      <Link
+        href="/services"
+        className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow"
+      >
         Services
       </Link>
-      <Link href="/shop" className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow">
+      <Link
+        href="/shop"
+        className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow"
+      >
         Shop
       </Link>
       <Link href="/search" className="text-white hover:text-white/80 transition-colors text-shadow">
