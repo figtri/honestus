@@ -9,20 +9,18 @@ import { Sprout, HeartHandshake, Users } from 'lucide-react'
 const pillars = [
   {
     title: 'Honesty',
-    description:
-      `We use an authentic storytelling approach to generate the most relatable content—because everyone has a story to tell, not just CEOs.`,
+    description: `We use an authentic storytelling approach to generate the most relatable content—because everyone has a story to tell, not just CEOs.`,
     icon: <HeartHandshake className="w-8 h-8 text-emerald-400 mb-3" />,
   },
   {
     title: 'Roots',
     description:
-      `&ldquo;The deeper the roots, the greater the fruits.&rdquo; When we feel lost, we look to our roots to find where we&apos;ve been—and where we&apos;re going.`,
+      '“The deeper the roots, the greater the fruits.” When we feel lost, we look to our roots to find where we’ve been—and where we’re going.',
     icon: <Sprout className="w-8 h-8 text-emerald-400 mb-3" />,
   },
   {
     title: 'Family',
-    description:
-      `Whether it's your blood family, chosen family, your pets, or your plants—Honestus is dedicated to being a family to all.`,
+    description: `Whether it's your blood family, chosen family, your pets, or your plants—Honestus is dedicated to being a family to all.`,
     icon: <Users className="w-8 h-8 text-emerald-400 mb-3" />,
   },
 ]
@@ -35,7 +33,8 @@ const FounderBlurb = () => (
       that the most powerful brands and personal journeys start by looking inward.
     </p>
     <p className="text-md text-gray-400 mt-4 italic">
-      &ldquo;The idea for Honestus was born in the garden—surrounded by figs, growth, and reflection.&rdquo;
+      &ldquo;The idea for Honestus was born in the garden—surrounded by figs, growth, and
+      reflection.&rdquo;
     </p>
   </div>
 )
@@ -55,9 +54,7 @@ const AboutPage = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-center">
-            Our Roots
-          </h1>
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-center">Our Roots</h1>
           <motion.div
             className="h-1 bg-gradient-to-r from-emerald-400 to-emerald-300 rounded-full mt-2 mb-12 w-32 mx-auto"
             initial={{ scaleX: 0, originX: 0 }}
@@ -66,8 +63,8 @@ const AboutPage = () => {
             viewport={{ once: true }}
           />
           <p className="text-xl text-center text-gray-300 mb-16 max-w-3xl mx-auto">
-            Discover the core values that guide Honestus. We believe in the power of authentic stories,
-            understanding our origins, and building a strong, supportive community.
+            Discover the core values that guide Honestus. We believe in the power of authentic
+            stories, understanding our origins, and building a strong, supportive community.
           </p>
         </motion.div>
 
@@ -83,7 +80,9 @@ const AboutPage = () => {
               viewport={{ once: true }}
             >
               <div className="flex-shrink-0">{pillar.icon}</div>
-              <h2 className="text-2xl font-semibold mb-3 text-emerald-300 flex-shrink-0">{pillar.title}</h2>
+              <h2 className="text-2xl font-semibold mb-3 text-emerald-300 flex-shrink-0">
+                {pillar.title}
+              </h2>
               <p className="text-gray-200 flex-grow">{pillar.description}</p>
             </motion.div>
           ))}
@@ -120,4 +119,4 @@ const AboutPage = () => {
   )
 }
 
-export default AboutPage 
+export default AboutPage

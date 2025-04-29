@@ -19,7 +19,7 @@ export const Logo = (props: Props) => {
       )}
     >
       <Image
-        src="/logo_white.png"
+        src="/imgs/logo_white.png"
         alt="Honestus"
         width={100}
         height={100}
