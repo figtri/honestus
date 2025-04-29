@@ -120,6 +120,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
                   fill
                   className="object-cover scale-60 object-center"
                   priority
+                  loading="eager"
                 />
 
                 {/* Simple vignette with subtle gradient at top */}
