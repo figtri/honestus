@@ -106,7 +106,6 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
             className="min-h-[100vh] relative overflow-hidden flex items-center"
             style={{ backgroundColor: bgColor }}
           >
-            {/* Full background image with clean animation */}
             {section.image && (
               <motion.div
                 className="absolute inset-0 w-full h-full z-0"
