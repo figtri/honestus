@@ -8,7 +8,7 @@ import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 
-export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title'>
+export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title' | 'heroImage'>
 
 export const Card: React.FC<{
   alignItems?: 'center'
@@ -21,9 +21,10 @@ export const Card: React.FC<{
   const { card, link } = useClickableCard({})
   const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 
-  const { slug, categories, meta, title } = doc || {}
+  const { slug, categories, meta, title, heroImage } = doc || {}
   const { description, image: metaImage } = meta || {}
 
+  const imageToUse = heroImage || metaImage
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
   const titleToUse = titleFromProps || title
   const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
@@ -32,18 +33,33 @@ export const Card: React.FC<{
   return (
     <article
       className={cn(
-        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
+        'border border-border rounded-lg overflow-hidden bg-card hover:shadow-md transition-shadow duration-300 ease-in-out w-full cursor-pointer hover:scale-[1.01]',
         className,
       )}
       ref={card.ref}
     >
-      <div className="relative w-full ">
-        {!metaImage && <div className="">No image</div>}
-        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
+      <div className="relative w-full">
+        {!imageToUse && (
+          <div className="w-full aspect-[16/9] bg-muted flex items-center justify-center rounded-t-lg"></div>
+        )}
+        {imageToUse && typeof imageToUse !== 'string' && (
+          <div className="aspect-[16/9] overflow-hidden">
+            <Media resource={imageToUse} size="20vw" />
+          </div>
+        )}
+        {imageToUse && typeof imageToUse === 'string' && (
+          <div className="w-full aspect-[16/9] bg-muted overflow-hidden rounded-t-lg">
+            <img
+              src={imageToUse}
+              alt={titleToUse || 'Post image'}
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+        )}
       </div>
-      <div className="p-4">
+      <div className="p-2.5">
         {showCategories && hasCategories && (
-          <div className="uppercase text-sm mb-4">
+          <div className="uppercase text-xs mb-2">
             {showCategories && hasCategories && (
               <div>
                 {categories?.map((category, index) => {
@@ -69,15 +85,23 @@ export const Card: React.FC<{
           </div>
         )}
         {titleToUse && (
-          <div className="prose">
-            <h3>
-              <Link className="not-prose" href={href} ref={link.ref}>
+          <div className="prose prose-sm max-w-none">
+            <h4 className="text-base mt-0 mb-1">
+              <Link
+                className="not-prose transition-colors duration-200 hover:text-[#e27145]"
+                href={href}
+                ref={link.ref}
+              >
                 {titleToUse}
               </Link>
-            </h3>
+            </h4>
           </div>
         )}
-        {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
+        {description && (
+          <div className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+            <p className="m-0">{sanitizedDescription}</p>
+          </div>
+        )}
       </div>
     </article>
   )
