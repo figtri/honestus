@@ -38,6 +38,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head>
         <InitTheme />
         <link href="/favicon.png" rel="icon" type="image/png" sizes="512x512" />
+        <link rel="preconnect" href={getServerSideURL()} />
+        <link rel="dns-prefetch" href={getServerSideURL()} />
       </head>
       <body>
         <Providers>
