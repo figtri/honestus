@@ -14,4 +14,13 @@ module.exports = {
     ],
     additionalSitemaps: [`${SITE_URL}pages-sitemap.xml`, `${SITE_URL}posts-sitemap.xml`],
   },
+  transform: async (config, path) => {
+    return {
+      loc: `${SITE_URL}${path}`, // Force the use of production URL
+      changefreq: config.changefreq,
+      priority: config.priority,
+      lastmod: config.lastmod,
+      alternateRefs: config.alternateRefs ?? [],
+    }
+  },
 }
