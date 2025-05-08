@@ -1,18 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import type { Metadata } from 'next'
 import { Sprout, HeartHandshake, Users } from 'lucide-react'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-
-export const metadata: Metadata = {
-  title: 'About',
-  description: 'About Honestus',
-  openGraph: mergeOpenGraph({
-    title: 'About',
-    description: 'About Honestus',
-  }),
-}
 
 const pillars = [
   {
@@ -128,5 +117,4 @@ const AboutPage = () => {
     </div>
   )
 }
-
 export default AboutPage
