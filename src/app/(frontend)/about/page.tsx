@@ -23,7 +23,7 @@ const pillars = [
   {
     title: 'Roots',
     description:
-      '“The deeper the roots, the greater the fruits.” When we feel lost, we look to our roots to find where we’ve been—and where we’re going.',
+      '"The deeper the roots, the greater the fruits." When we feel lost, we look to our roots to find where we\'ve been—and where we\'re going.',
     icon: <Sprout className="w-8 h-8 text-emerald-400 mb-3" />,
   },
   {
@@ -108,6 +108,8 @@ const AboutPage = () => {
               src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1520&q=80"
               alt="Lush green leaves representing growth and roots"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
