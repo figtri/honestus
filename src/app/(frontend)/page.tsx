@@ -67,10 +67,10 @@ interface Section {
 }
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: 'Honestus',
   description: 'Welcome to Honestus featuring articles, interviews and more.',
   openGraph: mergeOpenGraph({
-    title: 'Home',
+    title: 'Honestus',
     description: 'Welcome to Honestus featuring articles, interviews and more.',
   }),
 }
