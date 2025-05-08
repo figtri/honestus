@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -36,7 +38,7 @@ const FounderBlurb = () => (
   </div>
 )
 
-const AboutPage = () => {
+export default function AboutPage() {
   return (
     <div className="bg-gradient-to-b from-[#1F3B2F] to-[#152A20] min-h-screen text-white py-24 pt-36 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <motion.div
@@ -117,4 +119,3 @@ const AboutPage = () => {
     </div>
   )
 }
-export default AboutPage
