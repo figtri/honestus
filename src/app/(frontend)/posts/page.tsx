@@ -39,7 +39,7 @@ export default async function Page() {
       <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-emerald-900/20 to-transparent"></div>
 
       <PageClient />
-      <div className="container relative z-10 mb-16">
+      <div className="container relative z-10 my-12 ">
         <div className="prose dark:prose-invert max-w-none">
           <h1 className="text-4xl font-bold text-white">Posts</h1>
           <div className="h-1 w-20 bg-emerald-500/70 rounded-full mt-2"></div>
