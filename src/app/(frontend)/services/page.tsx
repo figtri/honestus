@@ -3,29 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Users, PenSquare, ArrowRight, Star } from 'lucide-react'
-import type { Metadata } from 'next'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
-export const metadata: Metadata = {
-  title: 'Storytelling Services | Brand & Personal Narrative Development',
-  description:
-    'Transform your brand or personal story with expert storytelling services. From digital workshops to brand story packages, discover how to craft authentic narratives that resonate with your audience.',
-  openGraph: mergeOpenGraph({
-    title: 'Storytelling Services | Brand & Personal Narrative Development',
-    description:
-      'Transform your brand or personal story with expert storytelling services. From digital workshops to brand story packages, discover how to craft authentic narratives that resonate with your audience.',
-    url: '/services',
-    type: 'website',
-    images: [
-      {
-        url: '/images/services-og.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Storytelling Services by Kayla',
-      },
-    ],
-  }),
-}
 // Hardcoded content for the Services page
 const pageTitle = 'Services'
 const introText = `Want to root your brand or story in something real? I offer storytelling experiences that guide individuals and organizations in uncovering and sharing their authentic narrative.`
