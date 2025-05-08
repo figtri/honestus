@@ -5,7 +5,29 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ShoppingCart } from 'lucide-react'
+import type { Metadata } from 'next'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
+export const metadata: Metadata = {
+  title: 'Roots to Fruits Storytelling Kit | Guided Self-Interview Kit',
+  description:
+    'Discover the Roots to Fruits Storytelling Kit - a guided self-interview kit inspired by the Uprooting Passion format. Reflect on your past, explore your passions, and plant the seeds of your future.',
+  openGraph: mergeOpenGraph({
+    title: 'Roots to Fruits Storytelling Kit | Guided Self-Interview Kit',
+    description:
+      'Discover the Roots to Fruits Storytelling Kit - a guided self-interview kit inspired by the Uprooting Passion format. Reflect on your past, explore your passions, and plant the seeds of your future.',
+    url: '/shop',
+    type: 'website',
+    images: [
+      {
+        url: 'https://i.etsystatic.com/53645490/r/il/1bc2a0/6179918779/il_1588xN.6179918779_8bg6.jpg',
+        width: 1588,
+        height: 1588,
+        alt: 'Roots to Fruits Storytelling Kit - Main Product Image',
+      },
+    ],
+  }),
+}
 
 const imageUrls: string[] = [
   'https://i.etsystatic.com/53645490/r/il/1bc2a0/6179918779/il_1588xN.6179918779_8bg6.jpg',
@@ -20,7 +42,7 @@ const ShopPage = () => {
   const [mainImage, setMainImage] = useState<string>(imageUrls[0] ?? '')
 
   if (imageUrls.length === 0 || !mainImage) {
-    return <div>Loading images...</div>; 
+    return <div>Loading images...</div>
   }
 
   return (
@@ -54,12 +76,12 @@ const ShopPage = () => {
         {/* Image Gallery Section */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
           {/* Thumbnails (Left column on larger screens) */}
-          <motion.div 
+          <motion.div
             className="md:col-span-1 flex md:flex-col gap-2 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.5 }}
-            viewport={{ once: true }}  
+            viewport={{ once: true }}
           >
             {imageUrls.map((url, index) => (
               <button
@@ -86,7 +108,7 @@ const ShopPage = () => {
             transition={{ duration: 0.7, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <AnimatePresence mode='wait'>
+            <AnimatePresence mode="wait">
               <motion.div
                 key={mainImage} // Key change triggers animation
                 className="absolute inset-0"
@@ -100,7 +122,7 @@ const ShopPage = () => {
                   alt="Roots to Fruits Storytelling Kit - Main View"
                   fill
                   className="object-fit"
-                  priority 
+                  priority
                   sizes="(max-width: 768px) 100vw, 700px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
@@ -118,9 +140,9 @@ const ShopPage = () => {
         >
           <h2 className="text-2xl font-semibold mb-4 text-emerald-300">Description</h2>
           <p className="text-lg text-gray-200 leading-relaxed">
-            A guided self-interview kit inspired by my Uprooting Passion interview format.
-            Designed to help you reflect on your past, explore your passions, and plant the seeds
-            of your future.
+            A guided self-interview kit inspired by my Uprooting Passion interview format. Designed
+            to help you reflect on your past, explore your passions, and plant the seeds of your
+            future.
           </p>
         </motion.div>
 
