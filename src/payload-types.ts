@@ -107,10 +107,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'email-settings': EmailSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'email-settings': EmailSettingsSelect<false> | EmailSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1799,6 +1801,60 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
+ * Configure email addresses for form notifications and system emails
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-settings".
+ */
+export interface EmailSetting {
+  id: number;
+  notifications: {
+    /**
+     * Email address where all form submissions and notifications will be sent
+     */
+    adminEmail: string;
+    /**
+     * Email address that will appear as the sender for notifications
+     */
+    fromEmail: string;
+    /**
+     * Name that will appear as the sender for notifications
+     */
+    fromName?: string | null;
+  };
+  featureRequests?: {
+    /**
+     * Enable or disable email notifications for feature requests
+     */
+    enabled?: boolean | null;
+    /**
+     * Custom subject line for feature request emails (leave empty for default)
+     */
+    customSubject?: string | null;
+  };
+  formSubmissions?: {
+    /**
+     * Enable or disable email notifications for general form submissions
+     */
+    enabled?: boolean | null;
+    /**
+     * Prefix for form submission email subjects
+     */
+    subjectPrefix?: string | null;
+  };
+  /**
+   * Send a test email to verify your configuration is working correctly
+   */
+  testEmail?: {
+    /**
+     * Email address to send test emails to (optional)
+     */
+    testEmailAddress?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -1839,6 +1895,39 @@ export interface FooterSelect<T extends boolean = true> {
               label?: T;
             };
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-settings_select".
+ */
+export interface EmailSettingsSelect<T extends boolean = true> {
+  notifications?:
+    | T
+    | {
+        adminEmail?: T;
+        fromEmail?: T;
+        fromName?: T;
+      };
+  featureRequests?:
+    | T
+    | {
+        enabled?: T;
+        customSubject?: T;
+      };
+  formSubmissions?:
+    | T
+    | {
+        enabled?: T;
+        subjectPrefix?: T;
+      };
+  testEmail?:
+    | T
+    | {
+        testEmailAddress?: T;
       };
   updatedAt?: T;
   createdAt?: T;
