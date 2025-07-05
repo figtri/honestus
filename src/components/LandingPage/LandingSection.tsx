@@ -71,7 +71,7 @@ export const LandingSection: React.FC<{ section: Section }> = ({ section }) => {
       case 'spotify':
         return '#152A20' // Dark Fig Green - shared between featured and spotify
       case 'cta':
-        return '#291f2e' // Burnt Orange
+        return '#291f2e' // dark purple
       case 'articles':
         return '#2A4539' // Another shade of Fig Green
       default:
