@@ -10,6 +10,7 @@ import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
+import { getEmailSettings } from '@/utilities/getEmailSettings'
 
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -87,6 +88,15 @@ export const plugins: Plugin[] = [
             // Send admin notification email for form submissions
             if (req?.payload) {
               try {
+                // Get email settings from dashboard
+                const emailSettings = await getEmailSettings()
+
+                // Only send email if form submissions are enabled
+                if (!emailSettings.formSubmissionsEnabled) {
+                  console.log('Form submission email notifications are disabled')
+                  return
+                }
+
                 // Get the form details
                 const form = await req.payload.findByID({
                   collection: 'forms',
@@ -298,11 +308,15 @@ export const plugins: Plugin[] = [
 `
 
                 await req.payload.sendEmail({
-                  from: 'forms@honestus.world',
-                  to: process.env.ADMIN_EMAIL || 'tanksalif@gmail.com',
-                  subject: `New Form Submission: ${form.title}`,
+                  from: `${emailSettings.fromName} <${emailSettings.fromEmail}>`,
+                  to: emailSettings.adminEmail,
+                  subject: `${emailSettings.formSubmissionsPrefix}: ${form.title}`,
                   html: emailHtml,
                 })
+                console.log(
+                  'Form submission notification sent successfully to:',
+                  emailSettings.adminEmail,
+                )
               } catch (emailError) {
                 console.error('Failed to send admin notification for form submission:', emailError)
               }
