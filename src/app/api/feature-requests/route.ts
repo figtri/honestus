@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { getEmailSettings } from '@/utilities/getEmailSettings'
 
 // Helper function to validate and format URLs
 const isValidUrl = (url: string): boolean => {
@@ -69,6 +70,9 @@ export async function POST(request: Request) {
       const config = await configPromise
       const payload = await getPayload({ config })
 
+      // Get email settings from dashboard
+      const emailSettings = await getEmailSettings()
+
       // Create a new feature request in the CMS
       const featureRequest = await payload.create({
         collection: 'feature-requests',
@@ -86,9 +90,10 @@ export async function POST(request: Request) {
 
       console.log('Feature request successfully created with ID:', featureRequest.id)
 
-      // Send email notification to admin
-      try {
-        const emailHtml = `
+      // Send email notification to admin (only if enabled)
+      if (emailSettings.featureRequestsEnabled) {
+        try {
+          const emailHtml = `
 <!doctype html>
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
   <head>
@@ -286,16 +291,19 @@ export async function POST(request: Request) {
 </html>
 `
 
-        await payload.sendEmail({
-          from: 'forms@honestus.world',
-          to: process.env.ADMIN_EMAIL || 'kayla.bonfiglio01@gmail.com',
-          subject: 'New Feature Request Submitted',
-          html: emailHtml,
-        })
-        console.log('Admin notification email sent successfully')
-      } catch (emailError) {
-        console.error('Failed to send admin notification email:', emailError)
-        // Don't fail the request if email fails - just log it
+          await payload.sendEmail({
+            from: `${emailSettings.fromName} <${emailSettings.fromEmail}>`,
+            to: emailSettings.adminEmail,
+            subject: emailSettings.featureRequestsSubject || 'New Feature Request Submitted',
+            html: emailHtml,
+          })
+          console.log('Admin notification email sent successfully to:', emailSettings.adminEmail)
+        } catch (emailError) {
+          console.error('Failed to send admin notification email:', emailError)
+          // Don't fail the request if email fails - just log it
+        }
+      } else {
+        console.log('Feature request email notifications are disabled')
       }
 
       // Return success response
