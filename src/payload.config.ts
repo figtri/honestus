@@ -2,6 +2,7 @@
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { vercelBlobStorage as _vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { resendAdapter } from '@payloadcms/email-resend'
 import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
@@ -62,6 +63,11 @@ export default buildConfig({
       ],
     },
   },
+  email: resendAdapter({
+    defaultFromAddress: 'forms@honestus.world',
+    defaultFromName: 'Honestus',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
   db: sqliteAdapter({
