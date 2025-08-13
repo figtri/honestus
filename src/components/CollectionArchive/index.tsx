@@ -67,7 +67,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
               </div>
 
-              <div className="relative z-20 p-5 pl-5 flex flex-col flex-grow bg-white">
+              <div className="relative p-5 pl-5 flex flex-col flex-grow bg-white">
                 {/* Reading time and progress */}
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center text-gray-500 text-sm">
