@@ -2,6 +2,26 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+// Helper function to clean and format content from Google Doc
+function cleanAndFormatContent(content: string) {
+  // Remove hashtags and links
+  let cleaned = content
+    .replace(/#\w+/g, '') // Remove hashtags
+    .replace(/https?:\/\/[^\s]+/g, '') // Remove URLs
+    .replace(/\b(www\.[^\s]+)/g, '') // Remove www links
+    .replace(/\s+/g, ' ') // Normalize whitespace
+    .trim()
+
+  // Split into paragraphs and clean each one
+  const paragraphs = cleaned
+    .split(/\n\s*\n/) // Split on double newlines
+    .map(p => p.trim())
+    .filter(p => p.length > 0) // Remove empty paragraphs
+    .filter(p => !p.match(/^[A-Z\s]+$/) && p.length > 10) // Remove all-caps short lines (likely headers)
+
+  return paragraphs
+}
+
 // Helper function to extract content from Google Doc URL
 async function extractFromGoogleDoc(url: string) {
   try {
@@ -13,7 +33,7 @@ async function extractFromGoogleDoc(url: string) {
 
     // Try to get the content via Google Docs API or scraping
     const exportUrl = `https://docs.google.com/document/d/${docId}/export?format=txt`
-    
+
     const response = await fetch(exportUrl)
     if (!response.ok) {
       throw new Error('Could not access Google Doc')
@@ -23,15 +43,17 @@ async function extractFromGoogleDoc(url: string) {
     return content.trim()
   } catch (error) {
     console.error('Error extracting from Google Doc:', error)
-    throw new Error('Failed to extract content from Google Doc. Please copy and paste the content manually.')
+    throw new Error(
+      'Failed to extract content from Google Doc. Please copy and paste the content manually.',
+    )
   }
 }
 
 // Helper function to convert plain text to Lexical format
 function createLexicalContent(content: string, title: string) {
-  // Split content into paragraphs
-  const paragraphs = content.split('\n\n').filter(p => p.trim())
-  
+  // Clean and format the content
+  const paragraphs = cleanAndFormatContent(content)
+
   const children = [
     // Title heading
     {
@@ -52,17 +74,18 @@ function createLexicalContent(content: string, title: string) {
       indent: 0,
       tag: 'h1',
       version: 1,
-    }
+    },
   ]
 
   // Add each paragraph
-  paragraphs.forEach(paragraph => {
+  paragraphs.forEach((paragraph) => {
     const trimmedParagraph = paragraph.trim()
     if (trimmedParagraph) {
-      // Check if it's a heading (starts with # or is all caps)
-      const isHeading = trimmedParagraph.startsWith('#') || 
-                       (trimmedParagraph.length < 100 && trimmedParagraph === trimmedParagraph.toUpperCase())
-      
+      // Check if it's a heading (starts with # or is all caps and short)
+      const isHeading =
+        trimmedParagraph.startsWith('#') ||
+        (trimmedParagraph.length < 100 && trimmedParagraph === trimmedParagraph.toUpperCase())
+
       if (isHeading) {
         // Remove # if present and create heading
         const headingText = trimmedParagraph.replace(/^#+\s*/, '')
@@ -124,7 +147,8 @@ function createLexicalContent(content: string, title: string) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { title, content, slug, publishedAt, description, category, googleDocUrl } = await req.json()
+    const { title, content, slug, publishedAt, description, category, googleDocUrl } =
+      await req.json()
 
     if (!title || !slug) {
       return NextResponse.json({ error: 'Title and slug are required' }, { status: 400 })
@@ -137,10 +161,14 @@ export async function POST(req: NextRequest) {
       try {
         finalContent = await extractFromGoogleDoc(googleDocUrl)
       } catch (error) {
-        return NextResponse.json({ 
-          error: 'Failed to extract content from Google Doc. Please copy and paste the content manually.',
-          details: error instanceof Error ? error.message : 'Unknown error'
-        }, { status: 400 })
+        return NextResponse.json(
+          {
+            error:
+              'Failed to extract content from Google Doc. Please copy and paste the content manually.',
+            details: error instanceof Error ? error.message : 'Unknown error',
+          },
+          { status: 400 },
+        )
       }
     }
 

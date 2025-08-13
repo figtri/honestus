@@ -97,14 +97,19 @@ export default function AddBlogPage() {
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-emerald-300">Add Blog Post</h1>
-          <p className="text-xl text-gray-300">Just paste your Google Doc URL and we'll do the rest!</p>
+          <p className="text-xl text-gray-300">
+            Just paste your Google Doc URL and we'll do the rest!
+          </p>
         </div>
 
         <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-8 shadow-md backdrop-blur-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Google Doc URL */}
             <div>
-              <label htmlFor="googleDocUrl" className="block text-sm font-medium text-emerald-300 mb-2">
+              <label
+                htmlFor="googleDocUrl"
+                className="block text-sm font-medium text-emerald-300 mb-2"
+              >
                 Google Doc URL *
               </label>
               <input
@@ -261,7 +266,9 @@ export default function AddBlogPage() {
               <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">
                 1
               </span>
-              <span>Make sure your Google Doc is publicly accessible (anyone with the link can view)</span>
+              <span>
+                Make sure your Google Doc is publicly accessible (anyone with the link can view)
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">
@@ -288,10 +295,11 @@ export default function AddBlogPage() {
               <span>Click "Create Blog Post" and you're done!</span>
             </li>
           </ol>
-          
+
           <div className="mt-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
             <p className="text-amber-300 text-sm">
-              <strong>Note:</strong> If the Google Doc extraction fails, you can still manually copy and paste the content into the form.
+              <strong>Note:</strong> If the Google Doc extraction fails, you can still manually copy
+              and paste the content into the form.
             </p>
           </div>
         </div>
