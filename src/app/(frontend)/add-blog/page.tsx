@@ -5,14 +5,18 @@ import React, { useState } from 'react'
 export default function AddBlogPage() {
   const [formData, setFormData] = useState({
     title: '',
-    content: '',
+    googleDocUrl: '',
     slug: '',
     description: '',
     category: '',
     publishedAt: new Date().toISOString().split('T')[0],
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [result, setResult] = useState<{ success?: boolean; message?: string; url?: string } | null>(null)
+  const [result, setResult] = useState<{
+    success?: boolean
+    message?: string
+    url?: string
+  } | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -42,7 +46,7 @@ export default function AddBlogPage() {
         // Reset form on success
         setFormData({
           title: '',
-          content: '',
+          googleDocUrl: '',
           slug: '',
           description: '',
           category: '',
@@ -66,7 +70,7 @@ export default function AddBlogPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+    setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
   // Auto-generate slug from title
@@ -81,10 +85,10 @@ export default function AddBlogPage() {
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const title = e.target.value
-    setFormData(prev => ({ 
-      ...prev, 
+    setFormData((prev) => ({
+      ...prev,
       title,
-      slug: generateSlug(title)
+      slug: generateSlug(title),
     }))
   }
 
@@ -92,16 +96,32 @@ export default function AddBlogPage() {
     <div className="min-h-screen bg-gradient-to-b from-[#2A4539] to-[#152A20] text-white py-24 pt-36 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-emerald-300">
-            Add Blog Post
-          </h1>
-          <p className="text-xl text-gray-300">
-            Copy content from Google Docs and create a new blog post
-          </p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-emerald-300">Add Blog Post</h1>
+          <p className="text-xl text-gray-300">Just paste your Google Doc URL and we'll do the rest!</p>
         </div>
 
         <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-8 shadow-md backdrop-blur-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Google Doc URL */}
+            <div>
+              <label htmlFor="googleDocUrl" className="block text-sm font-medium text-emerald-300 mb-2">
+                Google Doc URL *
+              </label>
+              <input
+                type="url"
+                id="googleDocUrl"
+                name="googleDocUrl"
+                value={formData.googleDocUrl}
+                onChange={handleChange}
+                required
+                className="w-full rounded-lg border-0 bg-white/10 px-4 py-3 text-white placeholder-white/50 focus:ring-2 focus:ring-emerald-500/50 transition-all duration-300"
+                placeholder="https://docs.google.com/document/d/YOUR_DOC_ID/edit"
+              />
+              <p className="text-sm text-gray-400 mt-1">
+                Make sure the Google Doc is publicly accessible (anyone with the link can view)
+              </p>
+            </div>
+
             {/* Title */}
             <div>
               <label htmlFor="title" className="block text-sm font-medium text-emerald-300 mb-2">
@@ -134,31 +154,15 @@ export default function AddBlogPage() {
                 className="w-full rounded-lg border-0 bg-white/10 px-4 py-3 text-white placeholder-white/50 focus:ring-2 focus:ring-emerald-500/50 transition-all duration-300"
                 placeholder="blog-post-url-slug"
               />
-              <p className="text-sm text-gray-400 mt-1">
-                This will be the URL of your blog post
-              </p>
-            </div>
-
-            {/* Content */}
-            <div>
-              <label htmlFor="content" className="block text-sm font-medium text-emerald-300 mb-2">
-                Content * (Copy from Google Docs)
-              </label>
-              <textarea
-                id="content"
-                name="content"
-                value={formData.content}
-                onChange={handleChange}
-                required
-                rows={15}
-                className="w-full rounded-lg border-0 bg-white/10 px-4 py-3 text-white placeholder-white/50 focus:ring-2 focus:ring-emerald-500/50 transition-all duration-300 resize-vertical"
-                placeholder="Paste your blog post content here..."
-              />
+              <p className="text-sm text-gray-400 mt-1">This will be the URL of your blog post</p>
             </div>
 
             {/* Description */}
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-emerald-300 mb-2">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-emerald-300 mb-2"
+              >
                 SEO Description
               </label>
               <textarea
@@ -190,7 +194,10 @@ export default function AddBlogPage() {
 
             {/* Published Date */}
             <div>
-              <label htmlFor="publishedAt" className="block text-sm font-medium text-emerald-300 mb-2">
+              <label
+                htmlFor="publishedAt"
+                className="block text-sm font-medium text-emerald-300 mb-2"
+              >
                 Published Date
               </label>
               <input
@@ -209,9 +216,10 @@ export default function AddBlogPage() {
                 type="submit"
                 disabled={isSubmitting}
                 className={`w-full rounded-lg py-3 text-center font-semibold text-white shadow-lg transition-all duration-300
-                  ${isSubmitting
-                    ? 'bg-gray-500 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:shadow-[0_0_15px_rgba(16,185,129,0.4)]'
+                  ${
+                    isSubmitting
+                      ? 'bg-gray-500 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:shadow-[0_0_15px_rgba(16,185,129,0.4)]'
                   }`}
               >
                 {isSubmitting ? 'Creating Blog Post...' : 'Create Blog Post'}
@@ -221,11 +229,13 @@ export default function AddBlogPage() {
 
           {/* Result Message */}
           {result && (
-            <div className={`mt-6 p-4 rounded-lg ${
-              result.success 
-                ? 'bg-emerald-500/10 border border-emerald-500/20' 
-                : 'bg-red-500/10 border border-red-500/20'
-            }`}>
+            <div
+              className={`mt-6 p-4 rounded-lg ${
+                result.success
+                  ? 'bg-emerald-500/10 border border-emerald-500/20'
+                  : 'bg-red-500/10 border border-red-500/20'
+              }`}
+            >
               <p className={`font-medium ${result.success ? 'text-emerald-300' : 'text-red-300'}`}>
                 {result.message}
               </p>
@@ -248,26 +258,42 @@ export default function AddBlogPage() {
           <h3 className="text-lg font-semibold text-emerald-300 mb-4">How to Use:</h3>
           <ol className="space-y-2 text-gray-300">
             <li className="flex items-start gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">1</span>
-              <span>Open your Google Doc with the blog content</span>
+              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">
+                1
+              </span>
+              <span>Make sure your Google Doc is publicly accessible (anyone with the link can view)</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">2</span>
-              <span>Copy all the content (Ctrl+A, Ctrl+C)</span>
+              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">
+                2
+              </span>
+              <span>Copy the Google Doc URL from your browser</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">3</span>
-              <span>Paste it into the Content field above</span>
+              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">
+                3
+              </span>
+              <span>Paste the URL into the form above</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">4</span>
-              <span>Fill in the title and other details</span>
+              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">
+                4
+              </span>
+              <span>Add a title and other details</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">5</span>
+              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0 mt-0.5">
+                5
+              </span>
               <span>Click "Create Blog Post" and you're done!</span>
             </li>
           </ol>
+          
+          <div className="mt-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+            <p className="text-amber-300 text-sm">
+              <strong>Note:</strong> If the Google Doc extraction fails, you can still manually copy and paste the content into the form.
+            </p>
+          </div>
         </div>
       </div>
     </div>

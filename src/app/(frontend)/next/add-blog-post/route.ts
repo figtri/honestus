@@ -2,15 +2,150 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+// Helper function to extract content from Google Doc URL
+async function extractFromGoogleDoc(url: string) {
+  try {
+    // Convert Google Doc URL to export format
+    const docId = url.match(/\/d\/([a-zA-Z0-9-_]+)/)?.[1]
+    if (!docId) {
+      throw new Error('Invalid Google Doc URL')
+    }
+
+    // Try to get the content via Google Docs API or scraping
+    const exportUrl = `https://docs.google.com/document/d/${docId}/export?format=txt`
+    
+    const response = await fetch(exportUrl)
+    if (!response.ok) {
+      throw new Error('Could not access Google Doc')
+    }
+
+    const content = await response.text()
+    return content.trim()
+  } catch (error) {
+    console.error('Error extracting from Google Doc:', error)
+    throw new Error('Failed to extract content from Google Doc. Please copy and paste the content manually.')
+  }
+}
+
+// Helper function to convert plain text to Lexical format
+function createLexicalContent(content: string, title: string) {
+  // Split content into paragraphs
+  const paragraphs = content.split('\n\n').filter(p => p.trim())
+  
+  const children = [
+    // Title heading
+    {
+      type: 'heading',
+      children: [
+        {
+          type: 'text',
+          detail: 0,
+          format: 0,
+          mode: 'normal',
+          style: '',
+          text: title,
+          version: 1,
+        },
+      ],
+      direction: 'ltr' as const,
+      format: '' as const,
+      indent: 0,
+      tag: 'h1',
+      version: 1,
+    }
+  ]
+
+  // Add each paragraph
+  paragraphs.forEach(paragraph => {
+    const trimmedParagraph = paragraph.trim()
+    if (trimmedParagraph) {
+      // Check if it's a heading (starts with # or is all caps)
+      const isHeading = trimmedParagraph.startsWith('#') || 
+                       (trimmedParagraph.length < 100 && trimmedParagraph === trimmedParagraph.toUpperCase())
+      
+      if (isHeading) {
+        // Remove # if present and create heading
+        const headingText = trimmedParagraph.replace(/^#+\s*/, '')
+        children.push({
+          type: 'heading',
+          children: [
+            {
+              type: 'text',
+              detail: 0,
+              format: 0,
+              mode: 'normal',
+              style: '',
+              text: headingText,
+              version: 1,
+            },
+          ],
+          direction: 'ltr' as const,
+          format: '' as const,
+          indent: 0,
+          tag: 'h2',
+          version: 1,
+        })
+      } else {
+        // Regular paragraph
+        children.push({
+          type: 'paragraph',
+          children: [
+            {
+              type: 'text',
+              detail: 0,
+              format: 0,
+              mode: 'normal',
+              style: '',
+              text: trimmedParagraph,
+              version: 1,
+            },
+          ],
+          direction: 'ltr' as const,
+          format: '' as const,
+          indent: 0,
+          tag: 'p',
+          version: 1,
+        })
+      }
+    }
+  })
+
+  return {
+    root: {
+      type: 'root',
+      children,
+      direction: 'ltr' as const,
+      format: '' as const,
+      indent: 0,
+      version: 1,
+    },
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const { title, content, slug, publishedAt, description, category } = await req.json()
+    const { title, content, slug, publishedAt, description, category, googleDocUrl } = await req.json()
 
-    if (!title || !content || !slug) {
-      return NextResponse.json(
-        { error: 'Title, content, and slug are required' },
-        { status: 400 }
-      )
+    if (!title || !slug) {
+      return NextResponse.json({ error: 'Title and slug are required' }, { status: 400 })
+    }
+
+    let finalContent = content
+
+    // If Google Doc URL is provided, extract content from it
+    if (googleDocUrl && !content) {
+      try {
+        finalContent = await extractFromGoogleDoc(googleDocUrl)
+      } catch (error) {
+        return NextResponse.json({ 
+          error: 'Failed to extract content from Google Doc. Please copy and paste the content manually.',
+          details: error instanceof Error ? error.message : 'Unknown error'
+        }, { status: 400 })
+      }
+    }
+
+    if (!finalContent) {
+      return NextResponse.json({ error: 'Content is required' }, { status: 400 })
     }
 
     const payload = await getPayload({ config })
@@ -28,7 +163,7 @@ export async function POST(req: NextRequest) {
     if (!authors?.[0]) {
       return NextResponse.json(
         { error: 'Demo author not found. Please run the seed script first.' },
-        { status: 404 }
+        { status: 404 },
       )
     }
 
@@ -64,56 +199,6 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Create simple content structure
-    const contentStructure = {
-      root: {
-        type: 'root',
-        children: [
-          {
-            type: 'heading',
-            children: [
-              {
-                type: 'text',
-                detail: 0,
-                format: 0,
-                mode: 'normal',
-                style: '',
-                text: title,
-                version: 1,
-              },
-            ],
-            direction: 'ltr' as const,
-            format: '' as const,
-            indent: 0,
-            tag: 'h1',
-            version: 1,
-          },
-          {
-            type: 'paragraph',
-            children: [
-              {
-                type: 'text',
-                detail: 0,
-                format: 0,
-                mode: 'normal',
-                style: '',
-                text: content,
-                version: 1,
-              },
-            ],
-            direction: 'ltr' as const,
-            format: '' as const,
-            indent: 0,
-            version: 1,
-          },
-        ],
-        direction: 'ltr' as const,
-        format: '' as const,
-        indent: 0,
-        version: 1,
-      },
-    }
-
     // Create the blog post
     const post = await payload.create({
       collection: 'posts',
@@ -128,7 +213,7 @@ export async function POST(req: NextRequest) {
           title,
           description: description || `Read about ${title}`,
         },
-        content: contentStructure,
+        content: createLexicalContent(finalContent, title),
       },
     })
 
@@ -145,8 +230,11 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('Error creating blog post:', error)
     return NextResponse.json(
-      { error: 'Failed to create blog post', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
+      {
+        error: 'Failed to create blog post',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 },
     )
   }
 }
@@ -156,18 +244,17 @@ export async function GET() {
     message: 'Use POST to add a new blog post',
     example: {
       title: 'Your Blog Post Title',
-      content: 'Your blog post content here...',
+      googleDocUrl: 'https://docs.google.com/document/d/YOUR_DOC_ID/edit',
       slug: 'your-blog-post-slug',
       publishedAt: '2024-01-15T00:00:00.000Z', // optional
       description: 'SEO description for your post', // optional
       category: 'Personal Stories', // optional
     },
     instructions: [
-      'Copy content from Google Docs',
-      'Paste into the content field',
+      'Paste your Google Doc URL',
       'Add a title and slug',
       'Optionally add description and category',
-      'Submit to create the blog post'
-    ]
+      'Submit to create the blog post',
+    ],
   })
 }
