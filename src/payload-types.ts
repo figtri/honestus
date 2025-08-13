@@ -221,6 +221,15 @@ export interface Post {
   id: number;
   title: string;
   heroImage?: (number | null) | Media;
+  /**
+   * Import content from a Google Doc URL
+   */
+  googleDocImport?: {
+    /**
+     * Paste the Google Doc URL here (make sure it's publicly accessible)
+     */
+    googleDocUrl?: string | null;
+  };
   content: {
     root: {
       type: string;
@@ -1339,6 +1348,11 @@ export interface ServicePackageBlockSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
+  googleDocImport?:
+    | T
+    | {
+        googleDocUrl?: T;
+      };
   content?: T;
   relatedPosts?: T;
   categories?: T;
