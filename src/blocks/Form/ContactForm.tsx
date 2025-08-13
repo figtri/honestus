@@ -27,7 +27,7 @@ export const ContactForm: React.FC<
   const {
     enableIntro,
     form: formFromProps,
-    form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
+    form: { id: formID, confirmationType, redirect, submitButtonLabel } = {},
     introContent,
   } = props
 
@@ -146,7 +146,7 @@ export const ContactForm: React.FC<
                 Message Sent Successfully!
               </h3>
               <p className="text-gray-300">
-                Thank you for reaching out. I'll get back to you within 24 hours.
+                Thank you for reaching out. I&apos;ll get back to you within 24 hours.
               </p>
             </div>
           </div>

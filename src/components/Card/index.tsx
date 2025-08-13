@@ -3,6 +3,7 @@ import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
+import Image from 'next/image'
 
 import type { Post } from '@/payload-types'
 
@@ -49,10 +50,12 @@ export const Card: React.FC<{
         )}
         {imageToUse && typeof imageToUse === 'string' && (
           <div className="w-full aspect-[16/9] bg-muted overflow-hidden rounded-t-lg">
-            <img
+            <Image
               src={imageToUse}
               alt={titleToUse || 'Post image'}
               className="w-full h-full object-cover object-center"
+              width={400}
+              height={225}
             />
           </div>
         )}

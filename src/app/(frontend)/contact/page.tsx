@@ -36,15 +36,15 @@ export default async function ContactPage() {
           <h1 className="text-5xl md:text-6xl font-bold mb-4 text-emerald-300">Get in Touch</h1>
           <div className="h-1 bg-gradient-to-r from-emerald-400 to-emerald-300 rounded-full mt-2 mb-8 w-32 mx-auto animate-scale-x" />
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Ready to tell your story? Let's collaborate to uncover and share the authentic narrative
-            that sets you or your brand apart.
+            Ready to tell your story? Let&apos;s collaborate to uncover and share the authentic
+            narrative that sets you or your brand apart.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-            <h2 className="text-3xl font-semibold mb-8 text-emerald-300">Let's Connect</h2>
+            <h2 className="text-3xl font-semibold mb-8 text-emerald-300">Let&apos;s Connect</h2>
 
             <div className="space-y-6">
               <div className="flex items-start gap-4">
@@ -77,7 +77,7 @@ export default async function ContactPage() {
                   <h3 className="text-lg font-semibold text-emerald-300 mb-1">Consultation</h3>
                   <p className="text-gray-300">Schedule a free 15-minute discovery call</p>
                   <p className="text-sm text-gray-400 mt-1">
-                    Let's discuss your storytelling needs
+                    Let&apos;s discuss your storytelling needs
                   </p>
                 </div>
               </div>

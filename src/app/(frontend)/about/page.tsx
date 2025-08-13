@@ -11,25 +11,26 @@ const pillars = [
   },
   {
     title: 'Roots',
-    description: `"The deeper the roots, the greater the fruits." When we feel lost, we look to our roots to find where we've been—and where we're going.`,
+    description: `&ldquo;The deeper the roots, the greater the fruits.&rdquo; When we feel lost, we look to our roots to find where we&apos;ve been—and where we&apos;re going.`,
     icon: <Sprout className="w-8 h-8 text-emerald-400 mb-3" />,
   },
   {
     title: 'Family',
-    description: `Whether it's your blood family, chosen family, your pets, or your plants—Honestus is dedicated to being a family to all.`,
+    description: `Whether it&apos;s your blood family, chosen family, your pets, or your plants—Honestus is dedicated to being a family to all.`,
     icon: <Users className="w-8 h-8 text-emerald-400 mb-3" />,
   },
 ]
 
 const FounderBlurb = () => (
   <div className="relative z-10 bg-gradient-to-br from-white/10 to-white/5 border border-white/15 rounded-lg p-6 md:p-8 backdrop-blur-md shadow-xl -mt-16 mx-auto max-w-2xl">
-    <h3 className="text-2xl font-semibold mb-3 text-emerald-300">Founder's Note</h3>
+    <h3 className="text-2xl font-semibold mb-3 text-emerald-300">Founder&apos;s Note</h3>
     <p className="text-lg text-gray-200">
       Kayla Bonfiglio is a digital storyteller, podcast host, and fig-obsessed gardener who believes
       that the most powerful brands and personal journeys start by looking inward.
     </p>
     <p className="text-md text-gray-400 mt-4 italic">
-      `"The idea for Honestus was born in the garden—surrounded by figs, growth, and reflection."`
+      &ldquo;The idea for Honestus was born in the garden—surrounded by figs, growth, and
+      reflection.&rdquo;
     </p>
   </div>
 )

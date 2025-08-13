@@ -53,7 +53,7 @@ export const seed = async ({
         slug: global,
         data: {
           navItems: [],
-        } as any, // Type assertion since we know header/footer have navItems
+        } as Record<string, unknown>, // Type assertion since we know header/footer have navItems
         depth: 0,
         context: {
           disableRevalidate: true,

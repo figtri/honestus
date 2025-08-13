@@ -52,7 +52,7 @@ export const ServicePackageClient: React.FC<ServicePackageClientProps> = ({
       {/* Features list */}
       {features && features.length > 0 && (
         <div className="mb-6">
-          <h4 className="text-lg font-semibold text-emerald-400 mb-3">What's Included:</h4>
+          <h4 className="text-lg font-semibold text-emerald-400 mb-3">What&apos;s Included:</h4>
           <ul className="space-y-2">
             {features.map((feature, index) => (
               <li key={feature.id || index} className="flex items-center gap-2 text-gray-300">

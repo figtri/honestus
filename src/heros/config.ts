@@ -66,8 +66,9 @@ export const hero: Field = {
       },
       relationTo: 'media',
       // Only require media when hero type needs it
-      validate: (value: any, { siblingData }: { siblingData: any }) => {
-        const needsMedia = ['highImpact', 'mediumImpact'].includes(siblingData?.type)
+      validate: (value: unknown, { siblingData }: { siblingData: { type?: string } }) => {
+        const needsMedia =
+          siblingData?.type && ['highImpact', 'mediumImpact'].includes(siblingData.type)
         if (needsMedia && !value) return 'This field is required.'
         return true
       },

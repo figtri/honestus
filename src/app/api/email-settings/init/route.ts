@@ -28,7 +28,7 @@ export async function POST(request: Request) {
         emailSettings = await payload.findGlobal({
           slug: 'email-settings',
         })
-      } catch (error) {
+      } catch (_error) {
         // Global doesn't exist yet, we'll create it
         emailSettings = null
       }

@@ -76,7 +76,7 @@ export default buildConfig({
       url: process.env.DATABASE_URI || '',
       authToken: process.env.DATABASE_AUTH_TOKEN || '',
     },
-  }) as any,
+  }),
   collections: [Pages, Posts, Media, Categories, Users, LandingSections, FeatureRequests],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, EmailSettings],

@@ -1,11 +1,9 @@
 import React from 'react'
-import { Mail, Users, PenSquare, ArrowRight, Star } from 'lucide-react'
+import { Mail, Users, PenSquare, ArrowRight } from 'lucide-react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { RenderHero } from '@/heros/RenderHero'
-import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { notFound } from 'next/navigation'
-import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import RichText from '@/components/RichText'
 
 export default async function ServicesPage() {
@@ -81,7 +79,7 @@ export default async function ServicesPage() {
               {pkg.features && pkg.features.length > 0 && (
                 <div className="mt-auto bg-white/[0.02] p-5 rounded-xl">
                   <h3 className="text-sm uppercase text-emerald-400/90 mb-4 tracking-wider font-medium">
-                    What's included
+                    What&apos;s included
                   </h3>
                   <ul className="space-y-3">
                     {pkg.features.map((feature: any, i: number) => (
@@ -135,8 +133,8 @@ export default async function ServicesPage() {
             Ready to tell your story?
           </h2>
           <p className="text-gray-300 mb-6">
-            Let's collaborate to uncover and share the authentic narrative that sets you or your
-            brand apart.
+            Let&apos;s collaborate to uncover and share the authentic narrative that sets you or
+            your brand apart.
           </p>
           <a
             href="mailto:kayla@honestus.world?subject=Inquiry from Website"

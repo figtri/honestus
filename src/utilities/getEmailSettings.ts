@@ -1,4 +1,4 @@
-import { getPayload, GlobalSlug } from 'payload'
+import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
 export interface EmailSettings {
