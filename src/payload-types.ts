@@ -197,7 +197,7 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | ServicePackageBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -393,6 +393,13 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
 }
 /**
@@ -740,6 +747,40 @@ export interface Form {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServicePackageBlock".
+ */
+export interface ServicePackageBlock {
+  title: string;
+  icon?: ('users' | 'pen' | 'mail') | null;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  features?:
+    | {
+        feature: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaText?: string | null;
+  ctaLink?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'servicePackage';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1168,6 +1209,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        servicePackage?: T | ServicePackageBlockSelect<T>;
       };
   meta?:
     | T
@@ -1268,6 +1310,25 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServicePackageBlock_select".
+ */
+export interface ServicePackageBlockSelect<T extends boolean = true> {
+  title?: T;
+  icon?: T;
+  description?: T;
+  features?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLink?: T;
   id?: T;
   blockName?: T;
 }
@@ -1431,6 +1492,13 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
