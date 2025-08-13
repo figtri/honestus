@@ -15,34 +15,14 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
 
   return (
     <nav className="flex gap-4 items-center">
-      {navItems.map(({ link }, i) => {
-        return (
-          <CMSLink
-            key={i}
-            {...link}
-            appearance="link"
-            className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow"
-          />
-        )
-      })}
-      <Link
-        href="/about"
-        className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow"
-      >
-        About
-      </Link>
-      <Link
-        href="/services"
-        className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow"
-      >
-        Services
-      </Link>
-      <Link
-        href="/shop"
-        className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow"
-      >
-        Shop
-      </Link>
+      {navItems.map(({ link }, i) => (
+        <CMSLink
+          key={i}
+          {...link}
+          appearance="link"
+          className="text-white hover:text-white/80 transition-colors text-sm font-medium uppercase tracking-wider text-shadow"
+        />
+      ))}
       <Link href="/search" className="text-white hover:text-white/80 transition-colors text-shadow">
         <span className="sr-only">Search</span>
         <SearchIcon className="w-4 h-4" />
