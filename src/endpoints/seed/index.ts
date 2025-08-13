@@ -10,6 +10,8 @@ import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
 import { landingSections } from './landing-sections'
+import { servicesPage } from './services-page'
+import { aboutPage } from './about-page'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -271,7 +273,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding pages...`)
 
-  const [_, contactPage] = await Promise.all([
+  const [_, contactPage, servicesPageDoc, aboutPageDoc] = await Promise.all([
     payload.create({
       collection: 'pages',
       depth: 0,
@@ -281,6 +283,16 @@ export const seed = async ({
       collection: 'pages',
       depth: 0,
       data: contactPageData({ contactForm: contactForm }),
+    }),
+    payload.create({
+      collection: 'pages',
+      depth: 0,
+      data: servicesPage,
+    }),
+    payload.create({
+      collection: 'pages',
+      depth: 0,
+      data: aboutPage,
     }),
   ])
 
@@ -304,6 +316,26 @@ export const seed = async ({
         navItems: [
           {
             link: {
+              type: 'reference',
+              label: 'About',
+              reference: {
+                relationTo: 'pages',
+                value: aboutPageDoc.id,
+              },
+            },
+          },
+          {
+            link: {
+              type: 'reference',
+              label: 'Services',
+              reference: {
+                relationTo: 'pages',
+                value: servicesPageDoc.id,
+              },
+            },
+          },
+          {
+            link: {
               type: 'custom',
               label: 'Posts',
               url: '/posts',
@@ -325,31 +357,7 @@ export const seed = async ({
     payload.updateGlobal({
       slug: 'footer',
       data: {
-        navItems: [
-          {
-            link: {
-              type: 'custom',
-              label: 'Admin',
-              url: '/admin',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Source Code',
-              newTab: true,
-              url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Payload',
-              newTab: true,
-              url: 'https://payloadcms.com/',
-            },
-          },
-        ],
+        navItems: [],
       },
     }),
   ])
