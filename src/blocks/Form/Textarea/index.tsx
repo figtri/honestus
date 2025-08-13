@@ -1,8 +1,6 @@
 import type { TextField } from '@payloadcms/plugin-form-builder/types'
 import type { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
 
-import { Label } from '@/components/ui/label'
-import { Textarea as TextAreaComponent } from '@/components/ui/textarea'
 import React from 'react'
 
 import { Error } from '../Error'
@@ -14,23 +12,21 @@ export const Textarea: React.FC<
     register: UseFormRegister<FieldValues>
     rows?: number
   }
-> = ({ name, defaultValue, errors, label, register, required, rows = 3, width }) => {
+> = ({ name, defaultValue, errors, label, register, required, rows = 5, width }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name}>
+      <label htmlFor={name} className="block text-sm font-medium text-gray-300 mb-2">
         {label}
+        {required && <span className="text-emerald-400 ml-1">*</span>}
+      </label>
 
-        {required && (
-          <span className="required">
-            * <span className="sr-only">(required)</span>
-          </span>
-        )}
-      </Label>
-
-      <TextAreaComponent
-        defaultValue={defaultValue}
+      <textarea
         id={name}
+        defaultValue={defaultValue}
+        required={required}
         rows={rows}
+        className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/50 transition-colors resize-none"
+        placeholder="Your message"
         {...register(name, { required: required })}
       />
 

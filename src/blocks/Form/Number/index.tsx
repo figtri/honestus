@@ -1,8 +1,6 @@
 import type { TextField } from '@payloadcms/plugin-form-builder/types'
 import type { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
 
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import React from 'react'
 
 import { Error } from '../Error'
@@ -15,19 +13,17 @@ export const Number: React.FC<
 > = ({ name, defaultValue, errors, label, register, required, width }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name}>
+      <label htmlFor={name} className="block text-sm font-medium text-gray-300 mb-2">
         {label}
-
-        {required && (
-          <span className="required">
-            * <span className="sr-only">(required)</span>
-          </span>
-        )}
-      </Label>
-      <Input
-        defaultValue={defaultValue}
+        {required && <span className="text-emerald-400 ml-1">*</span>}
+      </label>
+      <input
+        type="tel"
         id={name}
-        type="number"
+        defaultValue={defaultValue}
+        required={required}
+        className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/50 transition-colors"
+        placeholder="Your phone number"
         {...register(name, { required })}
       />
       {errors[name] && <Error name={name} />}
