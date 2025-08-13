@@ -12,13 +12,50 @@ function cleanAndFormatContent(content: string) {
     .replace(/\s+/g, ' ') // Normalize whitespace
     .trim()
 
-  // Split into paragraphs and clean each one
-  const paragraphs = cleaned
-    .split(/\n\s*\n/) // Split on double newlines
-    .map(p => p.trim())
-    .filter(p => p.length > 0) // Remove empty paragraphs
-    .filter(p => !p.match(/^[A-Z\s]+$/) && p.length > 10) // Remove all-caps short lines (likely headers)
-
+  // Split by periods and create paragraphs
+  const sentences = cleaned.split(/\.\s+/).map(s => s.trim()).filter(s => s.length > 10)
+  
+  const paragraphs = []
+  let currentParagraph = []
+  
+  for (const sentence of sentences) {
+    // Skip very short sentences that are likely headers
+    if (sentence.length < 20 && sentence.match(/^[A-Z\s]+$/)) {
+      continue
+    }
+    
+    currentParagraph.push(sentence)
+    
+    // Create a new paragraph every 2-3 sentences
+    if (currentParagraph.length >= 2) {
+      const paragraphText = currentParagraph.join('. ') + '.'
+      if (paragraphText.length > 30) {
+        paragraphs.push(paragraphText)
+      }
+      currentParagraph = []
+    }
+  }
+  
+  // Add any remaining sentences as the last paragraph
+  if (currentParagraph.length > 0) {
+    const paragraphText = currentParagraph.join('. ') + '.'
+    if (paragraphText.length > 30) {
+      paragraphs.push(paragraphText)
+    }
+  }
+  
+  // If we still don't have paragraphs, split by common phrases
+  if (paragraphs.length <= 1) {
+    const parts = cleaned.split(/\s+(However|But|And|Or|So|Yet|Still|Also|Additionally|Moreover|Furthermore|Meanwhile|Therefore|Consequently|Thus|Hence|As a result|For example|For instance|In fact|Indeed|Clearly|Obviously|Evidently|Apparently|Seemingly|Presumably|Supposedly|Allegedly|Reportedly)\s+/i)
+    
+    for (const part of parts) {
+      const trimmed = part.trim()
+      if (trimmed.length > 50) {
+        paragraphs.push(trimmed)
+      }
+    }
+  }
+  
   return paragraphs
 }
 
