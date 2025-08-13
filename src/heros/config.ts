@@ -65,7 +65,12 @@ export const hero: Field = {
         condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
       },
       relationTo: 'media',
-      required: true,
+      // Only require media when hero type needs it
+      validate: (value: any, { siblingData }: { siblingData: any }) => {
+        const needsMedia = ['highImpact', 'mediumImpact'].includes(siblingData?.type)
+        if (needsMedia && !value) return 'This field is required.'
+        return true
+      },
     },
   ],
   label: false,
