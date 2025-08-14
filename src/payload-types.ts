@@ -261,6 +261,15 @@ export interface Post {
    * Estimated reading time in minutes
    */
   readingTime?: number | null;
+  /**
+   * Import content from a Google Doc URL
+   */
+  googleDocImport?: {
+    /**
+     * Paste the URL of your Google Doc here
+     */
+    url?: string | null;
+  };
   populatedAuthors?:
     | {
         id?: string | null;
@@ -1450,6 +1459,11 @@ export interface PostsSelect<T extends boolean = true> {
   publishedAt?: T;
   authors?: T;
   readingTime?: T;
+  googleDocImport?:
+    | T
+    | {
+        url?: T;
+      };
   populatedAuthors?:
     | T
     | {
