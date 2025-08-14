@@ -51,7 +51,7 @@ export const FounderNoteBlock: React.FC<FounderNoteBlockProps> = ({
         <div className="relative z-10 bg-gradient-to-br from-white/10 to-white/5 border border-white/15 rounded-lg p-6 md:p-8 backdrop-blur-md shadow-xl -mt-16 mx-auto max-w-2xl">
           {title && <h3 className="text-2xl font-semibold mb-3 text-emerald-300">{title}</h3>}
           <p className="text-lg text-gray-200 mb-4">{content}</p>
-          {quote && <p className="text-md text-gray-400 italic">"{quote}"</p>}
+          {quote && <p className="text-md text-gray-400 italic">&ldquo;{quote}&rdquo;</p>}
         </div>
       </div>
     </div>
