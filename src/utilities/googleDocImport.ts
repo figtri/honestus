@@ -7,7 +7,7 @@ export async function extractFromGoogleDoc(url: string) {
     }
 
     const exportUrl = `https://docs.google.com/document/d/${docId}/export?format=txt`
-    
+
     const response = await fetch(exportUrl)
     if (!response.ok) {
       throw new Error('Could not access Google Doc')
@@ -23,7 +23,7 @@ export async function extractFromGoogleDoc(url: string) {
 
 // Helper function to clean and format content from Google Doc
 export function cleanAndFormatContent(content: string) {
-  let cleaned = content
+  const cleaned = content
     .replace(/#\w+/g, '') // Remove hashtags
     .replace(/https?:\/\/[^\s]+/g, '') // Remove URLs
     .replace(/\b(www\.[^\s]+)/g, '') // Remove www links
@@ -106,18 +106,18 @@ export function createLexicalContent(content: string, title: string) {
       indent: 0,
       tag: 'h1',
       version: 1,
-    }
+    },
   ]
 
   // Add each paragraph
-  paragraphs.forEach(paragraph => {
+  paragraphs.forEach((paragraph) => {
     const trimmedParagraph = paragraph.trim()
     if (trimmedParagraph) {
       // Check if it's a heading (starts with # or is all caps and short)
       const isHeading =
         trimmedParagraph.startsWith('#') ||
         (trimmedParagraph.length < 100 && trimmedParagraph === trimmedParagraph.toUpperCase())
-      
+
       if (isHeading) {
         // Remove # if present and create heading
         const headingText = trimmedParagraph.replace(/^#+\s*/, '')
