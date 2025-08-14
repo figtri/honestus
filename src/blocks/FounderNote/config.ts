@@ -22,7 +22,7 @@ export const FounderNote: Block = {
       type: 'textarea',
       required: true,
       admin: {
-        description: 'Main content of the founder note',
+        description: 'Main content about the founder',
       },
     },
     {
@@ -31,6 +31,15 @@ export const FounderNote: Block = {
       required: false,
       admin: {
         description: 'Optional quote or italic text to display below the main content',
+      },
+    },
+    {
+      name: 'backgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      admin: {
+        description: 'Background image for the founder note section (optional)',
       },
     },
   ],
