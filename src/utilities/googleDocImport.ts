@@ -86,28 +86,7 @@ export function cleanAndFormatContent(content: string) {
 export function createLexicalContent(content: string, title: string) {
   const paragraphs = cleanAndFormatContent(content)
 
-  const children = [
-    // Title heading
-    {
-      type: 'heading',
-      children: [
-        {
-          type: 'text',
-          detail: 0,
-          format: 0,
-          mode: 'normal',
-          style: '',
-          text: title,
-          version: 1,
-        },
-      ],
-      direction: 'ltr' as const,
-      format: '' as const,
-      indent: 0,
-      tag: 'h1',
-      version: 1,
-    },
-  ]
+  const children: any[] = []
 
   // Add each paragraph
   paragraphs.forEach((paragraph) => {
