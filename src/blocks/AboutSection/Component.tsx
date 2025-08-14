@@ -128,7 +128,7 @@ export const AboutSectionBlock: React.FC<AboutSectionBlockProps> = ({
             transition={{ duration: 0.7, delay: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="relative z-10 bg-gradient-to-br from-white/10 to-white/5 border border-white/15 rounded-lg p-6 md:p-8 backdrop-blur-md shadow-xl -mt-16 mx-auto max-w-2xl">
+            <div className="relative z-10 bg-gradient-to-br blur-md from-white/10 to-white/5 border border-white/15 rounded-lg p-6 md:p-8 backdrop-blur-md shadow-xl -mt-16 mx-auto max-w-2xl">
               <h3 className="text-2xl font-semibold mb-3 text-emerald-300">{founderNote.title}</h3>
               <p className="text-lg text-gray-200">{founderNote.content}</p>
               {founderNote.quote && (
