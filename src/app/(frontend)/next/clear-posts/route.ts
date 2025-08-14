@@ -1,6 +1,8 @@
 import { getPayload, createLocalReq } from 'payload'
 import config from '@payload-config'
 
+export const maxDuration = 30
+
 export async function POST(): Promise<Response> {
   if (process.env.NODE_ENV !== 'development') {
     return new Response('Forbidden', { status: 403 })

@@ -1,7 +1,7 @@
 import { createLocalReq, getPayload } from 'payload'
 import config from '@payload-config'
 
-export const maxDuration = 120
+export const maxDuration = 60
 
 type ImportResult = {
   created: number
