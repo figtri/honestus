@@ -197,7 +197,16 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | ServicePackageBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | ServicePackageBlock
+    | ValuesBlock
+    | FounderNoteBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -784,6 +793,63 @@ export interface ServicePackageBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuesBlock".
+ */
+export interface ValuesBlock {
+  /**
+   * Main title for the values section
+   */
+  title: string;
+  /**
+   * Introduction text below the title (optional - leave empty to avoid duplication)
+   */
+  introText?: string | null;
+  values: {
+    /**
+     * Title of the value (e.g., Honesty, Roots, Family)
+     */
+    title: string;
+    /**
+     * Description of what this value represents
+     */
+    description: string;
+    /**
+     * Icon to display for this value
+     */
+    icon: 'heartHandshake' | 'sprout' | 'users' | 'star' | 'mail' | 'penSquare' | 'lightbulb' | 'shield';
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'values';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FounderNoteBlock".
+ */
+export interface FounderNoteBlock {
+  /**
+   * Title for the founder note section
+   */
+  title: string;
+  /**
+   * Main content about the founder
+   */
+  content: string;
+  /**
+   * Optional quote or italic text to display below the main content
+   */
+  quote?: string | null;
+  /**
+   * Background image for the founder note section (optional)
+   */
+  backgroundImage?: (number | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'founderNote';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "landing-sections".
  */
 export interface LandingSection {
@@ -1210,6 +1276,8 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         servicePackage?: T | ServicePackageBlockSelect<T>;
+        values?: T | ValuesBlockSelect<T>;
+        founderNote?: T | FounderNoteBlockSelect<T>;
       };
   meta?:
     | T
@@ -1329,6 +1397,36 @@ export interface ServicePackageBlockSelect<T extends boolean = true> {
       };
   ctaText?: T;
   ctaLink?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuesBlock_select".
+ */
+export interface ValuesBlockSelect<T extends boolean = true> {
+  title?: T;
+  introText?: T;
+  values?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        icon?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FounderNoteBlock_select".
+ */
+export interface FounderNoteBlockSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  quote?: T;
+  backgroundImage?: T;
   id?: T;
   blockName?: T;
 }
