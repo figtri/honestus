@@ -8,6 +8,8 @@ import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { ServicePackage } from '../../blocks/ServicePackage/config'
+import { Values } from '../../blocks/Values/config'
+import { FounderNote } from '../../blocks/FounderNote/config'
 
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -77,7 +79,16 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, ServicePackage],
+              blocks: [
+                CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                FormBlock,
+                ServicePackage,
+                Values,
+                FounderNote,
+              ],
               required: true,
               admin: {
                 initCollapsed: true,
