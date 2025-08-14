@@ -1,5 +1,5 @@
 import type { Field } from 'payload'
-import { extractFromGoogleDoc, createLexicalContent } from '@/utilities/googleDocImport'
+import { extractFromGoogleDoc } from '@/utilities/googleDocImport'
 
 export const googleDocImportField: Field = {
   name: 'googleDocImport',
@@ -37,21 +37,22 @@ export const googleDocImportField: Field = {
           try {
             const content = await extractFromGoogleDoc(value.url)
             const title = siblingData?.title || 'Untitled'
-            
+
             // Create Lexical content without duplicating the title
             const lexicalContent = createLexicalContentWithoutTitle(content, title)
-            
+
             // Update the content field
             siblingData.content = lexicalContent
-            
+
             // Mark as imported
             value.imported = true
             value.importedAt = new Date().toISOString()
-            
+
             return value
           } catch (error) {
             console.error('Failed to import Google Doc:', error)
-            throw new Error(`Failed to import Google Doc: ${error.message}`)
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+            throw new Error(`Failed to import Google Doc: ${errorMessage}`)
           }
         }
         return value
@@ -71,7 +72,7 @@ function createLexicalContentWithoutTitle(content: string, title: string) {
     .map((s) => s.trim())
     .filter((s) => s.length > 10)
 
-  const children = []
+  const children: any[] = []
 
   // Add each paragraph
   paragraphs.forEach((paragraph) => {
