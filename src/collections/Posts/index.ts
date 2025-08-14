@@ -26,6 +26,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
+import { googleDocImportField } from '@/fields/googleDocImport'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -217,6 +218,7 @@ export const Posts: CollectionConfig<'posts'> = {
       min: 1,
       defaultValue: 5,
     },
+    googleDocImportField,
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy
     // GraphQL will also not return mutated user data that differs from the underlying schema
