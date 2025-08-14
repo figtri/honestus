@@ -137,7 +137,7 @@ export default async function ServicesPage() {
             your brand apart.
           </p>
           <a
-            href="mailto:kayla@honestus.world?subject=Inquiry from Website"
+            href="https://www.honestus.world/contact"
             className="inline-flex items-center px-6 py-3 bg-emerald-500 text-white rounded-lg text-base font-medium hover:bg-emerald-400 transition-colors duration-300 shadow-lg hover:shadow-emerald-700/40"
           >
             <Mail className="w-5 h-5 mr-2" />
