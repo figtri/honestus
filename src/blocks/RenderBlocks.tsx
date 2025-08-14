@@ -12,6 +12,7 @@ import { PillarBlock } from '@/blocks/Pillar/Component'
 import { FounderNoteBlock } from '@/blocks/FounderNote/Component'
 import { ServicePackagesBlock } from '@/blocks/ServicePackages/Component'
 import { AboutSectionBlock } from '@/blocks/AboutSection/Component'
+import { ValuesBlock } from '@/blocks/Values/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -24,6 +25,7 @@ const blockComponents = {
   founderNote: FounderNoteBlock,
   servicePackages: ServicePackagesBlock,
   aboutSection: AboutSectionBlock,
+  values: ValuesBlock,
 }
 
 export const RenderBlocks: React.FC<{
